@@ -35,7 +35,7 @@ extension LoginView {
         translatesAutoresizingMaskIntoConstraints = false
         
         loginTextField.translatesAutoresizingMaskIntoConstraints = false
-        loginTextField.placeholder = "Digite seu texto aqui"
+        loginTextField.placeholder = ""
         backgroundColor = .gray
     }
     
