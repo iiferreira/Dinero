@@ -36,7 +36,7 @@ extension LoginView {
         
         loginTextField.translatesAutoresizingMaskIntoConstraints = false
         loginTextField.placeholder = ""
-        backgroundColor = .gray
+        backgroundColor = .red
     }
     
     func layout() {
