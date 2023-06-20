@@ -10,7 +10,7 @@ import UIKit
 
 class LoginView : UIView {
     
-    let loginTextField = UITextField()
+    let usernameTextField = UITextField()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,21 +33,42 @@ class LoginView : UIView {
 extension LoginView {
     func style() {
         translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .gray
         
-        loginTextField.translatesAutoresizingMaskIntoConstraints = false
-        loginTextField.placeholder = ""
-        backgroundColor = .red
+        usernameTextField.translatesAutoresizingMaskIntoConstraints = false
+        usernameTextField.placeholder = "Username"
+        usernameTextField.delegate = self
     }
     
     func layout() {
-        addSubview(loginTextField)
+        addSubview(usernameTextField)
        
         
         NSLayoutConstraint.activate([
-            loginTextField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 1),
-            loginTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 1),
-            loginTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -1)
+            usernameTextField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 1),
+            usernameTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 1),
+            usernameTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -1)
         ])
 
+    }
+}
+
+
+extension LoginView : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        usernameTextField.endEditing(true)
+        return true
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField.text != "" {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
     }
 }
