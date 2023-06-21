@@ -36,8 +36,14 @@ extension LoginView {
         backgroundColor = .gray
         
         usernameTextField.translatesAutoresizingMaskIntoConstraints = false
+        usernameTextField.placeholder = ""
+
+       
+        
+        usernameTextField.translatesAutoresizingMaskIntoConstraints = false
         usernameTextField.placeholder = "Username"
         usernameTextField.delegate = self
+
     }
     
     func layout() {
