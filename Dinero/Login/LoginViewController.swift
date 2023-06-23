@@ -13,6 +13,14 @@ class LoginViewController: UIViewController {
     let signInButton = UIButton(type: .system)
     let errorMessageLabel = UILabel()
     
+    var username : String? {
+        return loginView.usernameTextField.text
+    }
+    
+    var password : String? {
+        return loginView.passwordTextfield.text
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -33,7 +41,7 @@ extension LoginViewController {
         signInButton.addTarget(self, action: #selector(signInTapped), for: .primaryActionTriggered)
         
         errorMessageLabel.translatesAutoresizingMaskIntoConstraints = false
-        errorMessageLabel.text = "Username / Password cannot be blank"
+        //errorMessageLabel.text = "Username / Password cannot be blank"
         errorMessageLabel.numberOfLines = 0
         errorMessageLabel.textColor = .systemRed
         errorMessageLabel.isHidden = false
@@ -70,9 +78,19 @@ extension LoginViewController {
     }
 }
 
+
+//MARK: Actions
 extension LoginViewController {
     @objc func signInTapped() {
-        
+        errorMessageLabel.isHidden = false
+        login()
+    }
+    
+    private func login() {
+        guard let username = username, let password = password else {
+            assertionFailure("Username / password should never be nil")
+            return
+        }
     }
 }
 
