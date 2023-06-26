@@ -97,9 +97,46 @@ extension OnboardingContainerViewController: UIPageViewControllerDataSource {
 }
 
 class ViewController1: UIViewController {
+    
+    let imageView : UIImageView = {
+        .init(image: UIImage(named: "delorean"))
+    }()
+    
+    let bankeyLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemRed
+        view.backgroundColor = .systemBackground
+        style()
+        layout()
+    }
+    
+    func style() {
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        bankeyLabel.translatesAutoresizingMaskIntoConstraints = false
+        bankeyLabel.text =  "Dinero is a cool app that fells like you are in the 80s"
+        bankeyLabel.numberOfLines = .max
+        bankeyLabel.textAlignment = .center
+    }
+    
+    func layout() {
+        view.addSubview(imageView)
+        view.addSubview(bankeyLabel)
+        
+        
+        // Image View
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        // Bankey Label
+        NSLayoutConstraint.activate([
+            bankeyLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 10),
+            bankeyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            bankeyLabel.heightAnchor.constraint(equalToConstant: 100),
+            bankeyLabel.widthAnchor.constraint(equalToConstant: 330)
+        ])
     }
 }
 
