@@ -40,7 +40,7 @@ class OnboardingContainerViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemPurple
+        view.backgroundColor = .systemBackground
         
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
@@ -98,9 +98,10 @@ extension OnboardingContainerViewController: UIPageViewControllerDataSource {
 
 class ViewController1: UIViewController {
     
-    let imageView : UIImageView = {
-        .init(image: UIImage(named: "delorean"))
-    }()
+    let stackView = UIStackView()
+    
+    let closeButton = UIButton()
+    let imageView = UIImageView()
     
     let bankeyLabel = UILabel()
     
@@ -112,7 +113,18 @@ class ViewController1: UIViewController {
     }
     
     func style() {
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+    
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.configuration = .plain()
+        closeButton.setTitle("Close", for: [])
+        closeButton.addTarget(self, action: #selector(closeButtonTap), for: .touchUpInside)
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "delorean")
+        
         bankeyLabel.translatesAutoresizingMaskIntoConstraints = false
         bankeyLabel.text =  "Dinero is a cool app that fells like you are in the 80s"
         bankeyLabel.numberOfLines = .max
@@ -120,20 +132,27 @@ class ViewController1: UIViewController {
     }
     
     func layout() {
-        view.addSubview(imageView)
-        view.addSubview(bankeyLabel)
+        view.addSubview(stackView)
+        view.addSubview(closeButton)
         
+        stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(bankeyLabel)
+        
+        //Close Button Constraints
+        
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 1),
+            closeButton.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 1)
+        ])
         
         // Image View
         NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
         // Bankey Label
         NSLayoutConstraint.activate([
-            bankeyLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 10),
-            bankeyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             bankeyLabel.heightAnchor.constraint(equalToConstant: 100),
             bankeyLabel.widthAnchor.constraint(equalToConstant: 330)
         ])
@@ -152,4 +171,15 @@ class ViewController3: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBlue
     }
+}
+
+//MARK: -Actions
+
+extension ViewController1 {
+    
+    @objc func closeButtonTap() {
+        print("Close tapped")
+    }
+    
+    
 }
