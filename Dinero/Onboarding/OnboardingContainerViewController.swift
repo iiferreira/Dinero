@@ -10,20 +10,18 @@ import UIKit
 
 class OnboardingContainerViewController : UIViewController {
     
+    
+    let closeButton = UIButton(type: .system)
     let pageViewController : UIPageViewController
     var pages = [UIViewController]()
-    var currentVC : UIViewController {
-        didSet{
-            
-        }
-    }
+    var currentVC : UIViewController
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         self.pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         
-        let page1 = ViewController1()
-        let page2 = ViewController2()
-        let page3 = ViewController3()
+        let page1 = OnboardingViewController(heroImage: "delorean", titleText: "Dinero is fast and a cool app, and have a brand new design that fells like you are in the 80s.")
+        let page2 = OnboardingViewController(heroImage: "thumbs", titleText: "Ximi")
+        let page3 = OnboardingViewController(heroImage: "world", titleText: "Xuri")
         
         pages.append(page1)
         pages.append(page2)
@@ -40,7 +38,8 @@ class OnboardingContainerViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
+        
+        view.backgroundColor = .secondarySystemBackground
         
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
@@ -59,7 +58,33 @@ class OnboardingContainerViewController : UIViewController {
         pageViewController.setViewControllers([pages.first!], direction: .forward, animated: true, completion: nil)
         currentVC = pages.first!
         
+        setup()
+        style()
+        layout()
+        
     }
+    
+    //TODO: - Setup, style and layout view.
+    
+    private func setup() {
+        
+    }
+    
+    private func style() {
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.setTitle("Close", for: [])
+    }
+    
+    private func layout() {
+        self.view.addSubview(closeButton)
+        
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2),
+            closeButton.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 2)
+        ])
+    }
+    
+    
 }
 
 
@@ -96,90 +121,17 @@ extension OnboardingContainerViewController: UIPageViewControllerDataSource {
     }
 }
 
-class ViewController1: UIViewController {
-    
-    let stackView = UIStackView()
-    
-    let closeButton = UIButton()
-    let imageView = UIImageView()
-    
-    let bankeyLabel = UILabel()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        style()
-        layout()
-    }
-    
-    func style() {
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-    
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.configuration = .plain()
-        closeButton.setTitle("Close", for: [])
-        closeButton.addTarget(self, action: #selector(closeButtonTap), for: .touchUpInside)
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "delorean")
-        
-        bankeyLabel.translatesAutoresizingMaskIntoConstraints = false
-        bankeyLabel.text =  "Dinero is a cool app that fells like you are in the 80s"
-        bankeyLabel.numberOfLines = .max
-        bankeyLabel.textAlignment = .center
-    }
-    
-    func layout() {
-        view.addSubview(stackView)
-        view.addSubview(closeButton)
-        
-        stackView.addArrangedSubview(imageView)
-        stackView.addArrangedSubview(bankeyLabel)
-        
-        //Close Button Constraints
-        
-        NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 1),
-            closeButton.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 1)
-        ])
-        
-        // Image View
-        NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-        
-        // Bankey Label
-        NSLayoutConstraint.activate([
-            bankeyLabel.heightAnchor.constraint(equalToConstant: 100),
-            bankeyLabel.widthAnchor.constraint(equalToConstant: 330)
-        ])
-    }
-}
-
-class ViewController2: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemGreen
-    }
-}
-
-class ViewController3: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBlue
-    }
-}
-
 //MARK: -Actions
 
-extension ViewController1 {
+extension OnboardingContainerViewController {
     
-    @objc func closeButtonTap() {
+    @objc func closeButtonTap(_ sender: UIButton) {
         print("Close tapped")
     }
     
-    
+    @objc func nextView() {
+        
+    }
+
 }
+
