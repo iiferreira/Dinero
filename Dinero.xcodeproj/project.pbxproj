@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F13CC142A4F42490042CE73 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F13CC132A4F42490042CE73 /* HomeViewController.swift */; };
+		1F13CC172A50585F0042CE73 /* LocalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F13CC162A50585E0042CE73 /* LocalState.swift */; };
 		1FC00A6A2A4238A3005C3501 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC00A692A4238A3005C3501 /* AppDelegate.swift */; };
 		1FC00A6E2A4238A3005C3501 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC00A6D2A4238A3005C3501 /* LoginViewController.swift */; };
 		1FC00A732A4238A4005C3501 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FC00A722A4238A4005C3501 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		1F13CC132A4F42490042CE73 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		1F13CC162A50585E0042CE73 /* LocalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalState.swift; sourceTree = "<group>"; };
 		1FC00A662A4238A3005C3501 /* Dinero.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dinero.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FC00A692A4238A3005C3501 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FC00A6D2A4238A3005C3501 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 			path = HomeScreen;
 			sourceTree = "<group>";
 		};
+		1F13CC152A50584D0042CE73 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1F13CC162A50585E0042CE73 /* LocalState.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		1FC00A5D2A4238A3005C3501 = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +78,7 @@
 		1FC00A682A4238A3005C3501 /* Dinero */ = {
 			isa = PBXGroup;
 			children = (
+				1F13CC152A50584D0042CE73 /* Utils */,
 				1F13CC122A4F422E0042CE73 /* HomeScreen */,
 				1FFF14702A46586900822024 /* Onboarding */,
 				1FC00A7D2A423BA2005C3501 /* Files */,
@@ -176,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FC00A802A423C0E005C3501 /* LoginView.swift in Sources */,
+				1F13CC172A50585F0042CE73 /* LocalState.swift in Sources */,
 				1FC00A6E2A4238A3005C3501 /* LoginViewController.swift in Sources */,
 				1FD19EC52A4A5DD400A5CF48 /* OnboardingViewController.swift in Sources */,
 				1FC00A6A2A4238A3005C3501 /* AppDelegate.swift in Sources */,

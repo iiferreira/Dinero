@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let defaults = UserDefaults()
-    var isFirstTimeLaunch : Bool = true
+    
     var loginViewController = LoginViewController()
     var onboardingContainerViewController = OnboardingContainerViewController()
     var homeViewController = HomeViewController()
@@ -35,18 +35,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate : LoginViewControllerDelegate {
     func didLogin() {
-        isFirstTimeLaunch = defaults.bool(forKey: "firstTimeLaunch")
-        if isFirstTimeLaunch {
-            setRootViewController(onboardingContainerViewController)
-        } else {
+        
+        if LocalState.hasOnboarded {
             setRootViewController(homeViewController)
+        } else {
+            setRootViewController(onboardingContainerViewController)
         }
     }
 }
 
 extension AppDelegate : OnboardingContainerViewControllerDelegate {
     func didFinishedOnboarding() {
-        defaults.setValue(false, forKey: "firstTimeLaunch")
+        LocalState.hasOnboarded = true
         setRootViewController(homeViewController)
     }
 }
