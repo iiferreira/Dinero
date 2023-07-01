@@ -14,7 +14,6 @@ class OnboardingViewController : UIViewController {
     
     let stackView = UIStackView()
     
-    let closeButton = UIButton()
     let image = UIImageView()
     
     let label = UILabel()
@@ -40,11 +39,6 @@ class OnboardingViewController : UIViewController {
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.configuration = .plain()
-        closeButton.setTitle("Close", for: [])
-        // closeButton.addTarget(self, action: #selector(closeButtonTap), for: .touchUpInside)
         
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
