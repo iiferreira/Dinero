@@ -190,7 +190,6 @@ extension OnboardingContainerViewController {
     }
     
     @objc func doneButtonTap() {
-        print("Done Button tap")
         delegate?.didFinishedOnboarding()
     }
 }

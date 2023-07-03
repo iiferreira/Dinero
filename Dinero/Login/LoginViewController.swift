@@ -51,6 +51,7 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController {
     private func style() {
+        loginView.usernameTextField.text = defaultUser.username
         logoLabel.translatesAutoresizingMaskIntoConstraints = false
         logoLabel.text = "Dinero"
         logoLabel.textColor = .systemOrange
@@ -128,6 +129,7 @@ extension LoginViewController {
         }
         
         if username == "Iuri" && password == "welcome" {
+            defaultUser.username = username
             signInButton.configuration?.showsActivityIndicator = true
             delegate?.didLogin()
         } else {

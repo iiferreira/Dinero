@@ -12,7 +12,7 @@ class LoginView : UIView {
     
     
     let stackView = UIStackView()
-    let usernameTextField = UITextField()
+    var usernameTextField = UITextField()
     let passwordTextfield = UITextField()
     let dividerView = UIView()
     

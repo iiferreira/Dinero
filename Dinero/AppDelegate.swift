@@ -7,27 +7,29 @@
 
 import UIKit
 
+let appColor : UIColor = .systemTeal
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let defaults = UserDefaults()
     
+    var accountViewController = AccountSummaryViewController()
     var loginViewController = LoginViewController()
     var onboardingContainerViewController = OnboardingContainerViewController()
-    var homeViewController = HomeViewController()
+    var mainViewController = MainViewController()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-//        window?.rootViewController = LoginViewController()
+
         loginViewController.delegate = self
         onboardingContainerViewController.delegate = self
-        homeViewController.delegate = self
-        
-        
+        accountViewController.delegate = self
+
         window?.rootViewController = loginViewController
         return true
     }
@@ -37,7 +39,7 @@ extension AppDelegate : LoginViewControllerDelegate {
     func didLogin() {
         
         if LocalState.hasOnboarded {
-            setRootViewController(homeViewController)
+            setRootViewController(mainViewController)
         } else {
             setRootViewController(onboardingContainerViewController)
         }
@@ -47,13 +49,13 @@ extension AppDelegate : LoginViewControllerDelegate {
 extension AppDelegate : OnboardingContainerViewControllerDelegate {
     func didFinishedOnboarding() {
         LocalState.hasOnboarded = true
-        setRootViewController(homeViewController)
+        setRootViewController(mainViewController)
     }
 }
 
 extension AppDelegate : LogoutDelegate {
     func didLogout() {
-        setRootViewController(loginViewController)
+        print("pew")
     }
 }
 
