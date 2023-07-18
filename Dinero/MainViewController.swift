@@ -50,7 +50,7 @@ class MainViewController: UITabBarController {
     
 }
 
-class AccountSummaryViewController : UIViewController {
+class DummySummaryViewController : UIViewController {
     
     weak var delegate : LogoutDelegate?
     let logoutButton = UIButton(type: .system)
