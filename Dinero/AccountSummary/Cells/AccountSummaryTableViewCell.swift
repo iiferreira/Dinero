@@ -60,7 +60,8 @@ extension AccountSummaryTableViewCell {
         balanceLabeL.textAlignment = .right
         
         balanceAmountLabel.translatesAutoresizingMaskIntoConstraints = false
-        balanceAmountLabel.text = "$9.000,00"
+        //balanceAmountLabel.text = "$9.000,00"
+        balanceAmountLabel.attributedText = makeFormattedBalance(dollars: "929,466", cents: "23")
         
         chevronImageView.translatesAutoresizingMaskIntoConstraints = false
         chevronImageView.tintColor = appColor
@@ -104,6 +105,21 @@ extension AccountSummaryTableViewCell {
             contentView.trailingAnchor.constraint(equalTo: chevronImageView.trailingAnchor, constant: 2)
         ])
         
+    }
+    
+    private func makeFormattedBalance(dollars: String, cents: String) -> NSMutableAttributedString {
+        let dollarSignAttributes : [ NSAttributedString.Key : Any] = [.font: UIFont.preferredFont(forTextStyle: .callout), .baselineOffset:4]
+        let dollarAttributes : [ NSAttributedString.Key : Any] = [.font: UIFont.preferredFont(forTextStyle: .title3)]
+        let centAttributes : [ NSAttributedString.Key : Any] = [.font: UIFont.preferredFont(forTextStyle: .footnote), .baselineOffset:4]
+        
+        let rootString = NSMutableAttributedString(string: "$", attributes: dollarSignAttributes)
+        let dollarString = NSMutableAttributedString(string: dollars, attributes: dollarAttributes)
+        let centString = NSMutableAttributedString(string: cents, attributes: centAttributes)
+        
+        rootString.append(dollarString)
+        rootString.append(centString)
+        
+        return rootString
     }
 }
 
