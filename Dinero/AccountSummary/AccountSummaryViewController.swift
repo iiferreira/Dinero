@@ -11,10 +11,10 @@ import UIKit
 class AccountSummaryViewController : UIViewController {
     
     
-    let names = ["Iuri","Aldo","Ygor"]
+    let names = ["Transaction One","Transaction Two","Transaction Three"]
     
     let tableView = UITableView()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +27,11 @@ class AccountSummaryViewController : UIViewController {
         self.view.backgroundColor = .clear
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        tableView.register(AccountSummaryTableViewCell.self, forCellReuseIdentifier: AccountSummaryTableViewCell.cellIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.rowHeight = AccountSummaryTableViewCell.rowHeight
+        tableView.tableFooterView = UIView()
     }
     
     func layout() {
@@ -55,12 +58,12 @@ class AccountSummaryViewController : UIViewController {
 
 extension AccountSummaryViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return names.count
+        return 20
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
-        cell.textLabel?.text = names[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryTableViewCell.cellIdentifier, for: indexPath) as! AccountSummaryTableViewCell
+        
         return cell
     }
 }
