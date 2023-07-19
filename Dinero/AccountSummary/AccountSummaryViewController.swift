@@ -11,7 +11,7 @@ import UIKit
 class AccountSummaryViewController : UIViewController {
     
     
-    let names = ["Transaction One","Transaction Two","Transaction Three"]
+    var accounts : [AccountSummaryTableViewCell.ViewModel] = []
     
     let tableView = UITableView()
     
@@ -20,11 +20,18 @@ class AccountSummaryViewController : UIViewController {
         super.viewDidLoad()
         setup()
         layout()
-        setupTableHeaderView()
+        
+        
     }
     
-    func setup() {
-        self.view.backgroundColor = .clear
+    private func setup() {
+        setupTableView()
+        setupTableHeaderView()
+        fetchData()
+    }
+    
+    private func setupTableView() {
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -34,7 +41,8 @@ class AccountSummaryViewController : UIViewController {
         tableView.tableFooterView = UIView()
     }
     
-    func layout() {
+    private func layout() {
+        self.view.backgroundColor = .clear
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
@@ -58,16 +66,41 @@ class AccountSummaryViewController : UIViewController {
 
 extension AccountSummaryViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return accounts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard !accounts.isEmpty else { return  UITableViewCell() }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryTableViewCell.cellIdentifier, for: indexPath) as! AccountSummaryTableViewCell
+        
+        let account = accounts[indexPath.row]
+        cell.configure(with: account)
         
         return cell
     }
 }
 
 extension AccountSummaryViewController : UITableViewDelegate {
+    
+}
+
+extension AccountSummaryViewController {
+    
+    private func fetchData() {
+        let savings = AccountSummaryTableViewCell.ViewModel(accountType: .Banking,
+                                                            accountName: "Basic Savings")
+        
+        let visa = AccountSummaryTableViewCell.ViewModel(accountType: .CreditCard,
+                                                         accountName: "Visa Card")
+        
+        let investment = AccountSummaryTableViewCell.ViewModel(accountType: .Investment,
+                                                               accountName: "Deposit")
+        
+        accounts.append(savings)
+        accounts.append(visa)
+        accounts.append(investment)
+    }
     
 }
