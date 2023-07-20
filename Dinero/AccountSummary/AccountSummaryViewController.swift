@@ -90,13 +90,13 @@ extension AccountSummaryViewController {
     
     private func fetchData() {
         let savings = AccountSummaryTableViewCell.ViewModel(accountType: .Banking,
-                                                            accountName: "Basic Savings")
+                                                            accountName: "Basic Savings", balance: 929466.23)
         
         let visa = AccountSummaryTableViewCell.ViewModel(accountType: .CreditCard,
-                                                         accountName: "Visa Card")
+                                                         accountName: "Visa Card", balance: 25000.52)
         
         let investment = AccountSummaryTableViewCell.ViewModel(accountType: .Investment,
-                                                               accountName: "Deposit")
+                                                               accountName: "Deposit", balance: 3290.99)
         
         accounts.append(savings)
         accounts.append(visa)
