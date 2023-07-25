@@ -29,8 +29,7 @@ struct CurrencyFormatter {
         let decimalSeparator = formatter.decimalSeparator!
         let dollarComponents = dollarsWithDecimal.components(separatedBy: decimalSeparator)
         var dollars = dollarComponents.first!
-        dollars.removeFirst()
-        
+    
         return dollars
     }
     
