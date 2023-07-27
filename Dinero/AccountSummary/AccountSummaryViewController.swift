@@ -10,19 +10,37 @@ import UIKit
 
 class AccountSummaryViewController : UIViewController {
     
-    
     var accounts : [AccountSummaryTableViewCell.ViewModel] = []
-    
     let tableView = UITableView()
     
+    lazy var logoutBarButtonItem : UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
+        barButtonItem.tintColor = .label
+        return barButtonItem
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         layout()
-        
-        
+        setupNavigationBar()
     }
+    
+    private func setupNavigationBar() {
+        navigationItem.rightBarButtonItem = logoutBarButtonItem
+    }
+    
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        var insets = view.safeAreaInsets
+        insets.top = 0
+        tableView.contentInset = insets
+    }
+    
+    
+}
+
+extension AccountSummaryViewController {
     
     private func setup() {
         setupTableView()
@@ -34,6 +52,8 @@ class AccountSummaryViewController : UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        tableView.contentInsetAdjustmentBehavior = .never
         
         tableView.register(AccountSummaryTableViewCell.self, forCellReuseIdentifier: AccountSummaryTableViewCell.cellIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,5 +122,13 @@ extension AccountSummaryViewController {
         accounts.append(visa)
         accounts.append(investment)
     }
-    
+}
+
+
+//MARK: -ACTIONS
+
+extension AccountSummaryViewController {
+    @objc func logoutTapped(_ sender: UIButton) {
+        NotificationCenter.default.post(name: .logout, object: nil)
+    }
 }

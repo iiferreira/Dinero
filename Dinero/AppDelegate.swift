@@ -29,38 +29,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         loginViewController.delegate = self
         onboardingContainerViewController.delegate = self
         
-        let vc = mainViewController
-        vc.setStatusBar()
+        registerForNotifications()
         
-        UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().backgroundColor = appColor
-        
-        window?.rootViewController = vc
+        displayLogin()
         return true
     }
+    
+    private func registerForNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didLogout), name: .logout, object: nil)
+    }
+    
 }
 
-extension AppDelegate : LoginViewControllerDelegate {
-    func didLogin() {
-        
+extension AppDelegate {
+    private func displayLogin() {
+        setRootViewController(loginViewController)
+    }
+    
+    private func displayNextScreen() {
         if LocalState.hasOnboarded {
+            //prepMainView()
             setRootViewController(mainViewController)
         } else {
             setRootViewController(onboardingContainerViewController)
         }
     }
-}
-
-extension AppDelegate : OnboardingContainerViewControllerDelegate {
-    func didFinishedOnboarding() {
-        LocalState.hasOnboarded = true
-        setRootViewController(mainViewController)
-    }
-}
-
-extension AppDelegate : LogoutDelegate {
-    func didLogout() {
-        print("pew")
+    
+    private func prepMainView() {
+        mainViewController.setStatusBar()
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().backgroundColor = appColor
     }
 }
 
@@ -83,3 +81,25 @@ extension AppDelegate {
         
     }
 }
+
+extension AppDelegate : LoginViewControllerDelegate {
+    func didLogin() {
+       displayNextScreen()
+    }
+}
+
+extension AppDelegate : OnboardingContainerViewControllerDelegate {
+    func didFinishedOnboarding() {
+        LocalState.hasOnboarded = true
+        prepMainView()
+        setRootViewController(mainViewController)
+    }
+}
+
+extension AppDelegate : LogoutDelegate {
+    @objc func didLogout() {
+        setRootViewController(loginViewController)
+    }
+}
+
+
