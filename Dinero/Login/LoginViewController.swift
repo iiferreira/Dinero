@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 protocol LogoutDelegate : AnyObject {
     func didLogout()
 }
@@ -21,6 +20,7 @@ class LoginViewController: UIViewController {
     weak var delegate : LoginViewControllerDelegate?
     
     let logoLabel = UILabel()
+    let subtitleLabel = UILabel()
     let loginView = LoginView()
     let signInButton = UIButton(type: .system)
     let errorMessageLabel = UILabel()
@@ -33,11 +33,29 @@ class LoginViewController: UIViewController {
         return loginView.passwordTextfield.text
     }
     
+    // animation
+    
+    var leadingEdgeOnScreen : CGFloat = 120
+    var leadingEdgeOffScreen : CGFloat = -1000
+    
+    var titleLeadingAnchor : NSLayoutConstraint?
+    
+    var subtitleTrailingEdgeOnScreen : CGFloat = 280
+    var subtitleTrailingEdgeOffScreen : CGFloat = 1000
+    
+    var subtitleTrailingAnchor : NSLayoutConstraint?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         style()
         layout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animate()
+        subtitleAnimate()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -52,10 +70,18 @@ class LoginViewController: UIViewController {
 extension LoginViewController {
     private func style() {
         loginView.usernameTextField.text = defaultUser.username
+        
         logoLabel.translatesAutoresizingMaskIntoConstraints = false
         logoLabel.text = "Dinero"
         logoLabel.textColor = .systemOrange
         logoLabel.font = UIFont.systemFont(ofSize: 48)
+        
+        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLabel.text = "Your premium source for all \n things banking!"
+        subtitleLabel.textAlignment = .center
+        subtitleLabel.textColor = .label
+        subtitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        subtitleLabel.numberOfLines = 0
         
         loginView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -75,15 +101,29 @@ extension LoginViewController {
     
     private func layout() {
         view.addSubview(logoLabel)
+        view.addSubview(subtitleLabel)
         view.addSubview(loginView)
         view.addSubview(signInButton)
         view.addSubview(errorMessageLabel)
         
-        
+        // Title
         NSLayoutConstraint.activate([
-            logoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoLabel.trailingAnchor.constraint(equalTo: loginView.trailingAnchor),
             logoLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 15)
         ])
+        
+        titleLeadingAnchor = logoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingEdgeOffScreen)
+        titleLeadingAnchor?.isActive = true
+        
+        // Subtitle
+        NSLayoutConstraint.activate([
+            subtitleLabel.topAnchor.constraint(equalTo: logoLabel.bottomAnchor, constant: 3),
+            //subtitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            subtitleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
+        ])
+        
+        subtitleTrailingAnchor = subtitleLabel.trailingAnchor.constraint(equalTo: view.leadingAnchor, constant: subtitleTrailingEdgeOffScreen)
+        subtitleTrailingAnchor?.isActive = true
         
         // LoginView
         NSLayoutConstraint.activate([
@@ -124,7 +164,7 @@ extension LoginViewController {
         }
         
         if username.isEmpty || password.isEmpty {
-            configureView(withMessage: "Username and password cannot be blank")
+            configureView(withMessage: "Username and password cannot be blank !")
             return
         }
         
@@ -133,13 +173,63 @@ extension LoginViewController {
             signInButton.configuration?.showsActivityIndicator = true
             delegate?.didLogin()
         } else {
-            configureView(withMessage: "Incorrect username or password")
+            configureView(withMessage: "Incorrect username or password !")
         }
     }
     
     private func configureView(withMessage message: String) {
         errorMessageLabel.isHidden = false
         errorMessageLabel.text = message
+        shakeButton()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            self.fadeErrorMessage()
+        }
+    }
+    
+    private func shakeButton() {
+        let animation = CAKeyframeAnimation()
+        animation.keyPath = "position.x"
+        animation.values = [0,10,-10,10,0]
+        animation.keyTimes = [0,0.16, 0.5, 0.83, 1]
+        animation.duration = 0.245
+        
+        animation.isAdditive = true
+        signInButton.layer.add(animation, forKey: "shake")
+    }
+    
+}
+
+// Animations
+
+extension LoginViewController {
+    
+    private func animation() {
+        self.titleLeadingAnchor?.constant = self.leadingEdgeOnScreen
+        self.view.layoutIfNeeded()
+    }
+    
+    private func animate() {
+        let animator1 = UIViewPropertyAnimator(duration: 0.55, curve: .easeInOut, animations: animation)
+        animator1.startAnimation()
+    }
+    
+    private func subtitleAnimate() {
+        let animator2 = UIViewPropertyAnimator(duration: 0.55, curve: .easeInOut) {
+            self.subtitleTrailingAnchor?.constant = self.subtitleTrailingEdgeOnScreen
+            self.view.layoutIfNeeded()
+        }
+        animator2.startAnimation()
+    }
+    
+    private func fadeErrorMessage() {
+        let animator3 = UIViewPropertyAnimator(duration: 0.45, curve: .easeInOut) {
+            self.errorMessageLabel.alpha = 0
+        }
+        animator3.startAnimation(afterDelay: 0.25)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.errorMessageLabel.isHidden = true
+            self.errorMessageLabel.alpha = 1
+        }
     }
 }
 

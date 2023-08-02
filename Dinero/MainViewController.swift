@@ -50,41 +50,36 @@ class MainViewController: UITabBarController {
     
 }
 
-class AccountSummaryViewController : UIViewController {
-    
-    weak var delegate : LogoutDelegate?
-    let logoutButton = UIButton(type: .system)
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .orange
-        style()
-        layout()
-    }
-    
-    private func style() {
-        logoutButton.translatesAutoresizingMaskIntoConstraints = false
-        logoutButton.setTitle("Logout", for: [])
-        logoutButton.tintColor = .blue
-        logoutButton.addTarget(self, action: #selector(logoutTapped), for: .primaryActionTriggered)
-    }
-    
-    private func layout() {
-        view.addSubview(logoutButton)
-        
-        NSLayoutConstraint.activate([
-            logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoutButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            logoutButton.widthAnchor.constraint(equalToConstant: 100),
-            logoutButton.heightAnchor.constraint(equalToConstant: 44)
-        ])
-    }
-    
-    @objc func logoutTapped(_ sender: UIButton) {
-        
-    }
-    
-}
+//class DummySummaryViewController : UIViewController {
+//    
+//    weak var delegate : LogoutDelegate?
+//    let logoutButton = UIButton(type: .system)
+//    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        view.backgroundColor = .orange
+//        style()
+//        layout()
+//    }
+//    
+//    private func style() {
+//        logoutButton.translatesAutoresizingMaskIntoConstraints = false
+//        logoutButton.setTitle("Logout", for: [])
+//        logoutButton.tintColor = .blue
+//        logoutButton.addTarget(self, action: #selector(logoutTapped), for: .primaryActionTriggered)
+//    }
+//    
+//    private func layout() {
+//        view.addSubview(logoutButton)
+//        
+//        NSLayoutConstraint.activate([
+//            logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            logoutButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+//            logoutButton.widthAnchor.constraint(equalToConstant: 100),
+//            logoutButton.heightAnchor.constraint(equalToConstant: 44)
+//        ])
+//    }
+//}
 
 class MoveMoneyViewController : UIViewController {
     override func viewDidLoad() {
