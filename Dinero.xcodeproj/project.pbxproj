@@ -169,8 +169,8 @@
 				1F7E1D8E2A66BABA0090DD68 /* AccountSummary */,
 				1F13CC122A4F422E0042CE73 /* HomeScreen */,
 				1F13CC152A50584D0042CE73 /* Utils */,
-				1FC00A7D2A423BA2005C3501 /* Files */,
 				1FD5386D2A78297C0075DAA5 /* Components */,
+				1FC00A7D2A423BA2005C3501 /* Files */,
 			);
 			path = Dinero;
 			sourceTree = "<group>";

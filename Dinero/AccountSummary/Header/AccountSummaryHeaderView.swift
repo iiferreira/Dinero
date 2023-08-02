@@ -18,12 +18,12 @@ class AccountSummaryHeaderView : UIView {
         super.init(frame: frame)
         commonInit()
         setupShakeyBell()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
+       
     }
     
     override var intrinsicContentSize: CGSize {
@@ -53,7 +53,6 @@ class AccountSummaryHeaderView : UIView {
             ShakeyBell.widthAnchor.constraint(equalToConstant: 24),
             ShakeyBell.heightAnchor.constraint(equalToConstant: 24),
         ])
-        
     }
     
 }

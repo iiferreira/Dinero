@@ -164,7 +164,7 @@ extension LoginViewController {
         }
         
         if username.isEmpty || password.isEmpty {
-            configureView(withMessage: "Username and password cannot be blank")
+            configureView(withMessage: "Username and password cannot be blank !")
             return
         }
         
@@ -173,7 +173,7 @@ extension LoginViewController {
             signInButton.configuration?.showsActivityIndicator = true
             delegate?.didLogin()
         } else {
-            configureView(withMessage: "Incorrect username or password")
+            configureView(withMessage: "Incorrect username or password !")
         }
     }
     
@@ -181,6 +181,9 @@ extension LoginViewController {
         errorMessageLabel.isHidden = false
         errorMessageLabel.text = message
         shakeButton()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            self.fadeErrorMessage()
+        }
     }
     
     private func shakeButton() {
@@ -188,13 +191,15 @@ extension LoginViewController {
         animation.keyPath = "position.x"
         animation.values = [0,10,-10,10,0]
         animation.keyTimes = [0,0.16, 0.5, 0.83, 1]
-        animation.duration = 0.25
+        animation.duration = 0.245
         
         animation.isAdditive = true
         signInButton.layer.add(animation, forKey: "shake")
     }
     
 }
+
+// Animations
 
 extension LoginViewController {
     
@@ -214,6 +219,17 @@ extension LoginViewController {
             self.view.layoutIfNeeded()
         }
         animator2.startAnimation()
+    }
+    
+    private func fadeErrorMessage() {
+        let animator3 = UIViewPropertyAnimator(duration: 0.45, curve: .easeInOut) {
+            self.errorMessageLabel.alpha = 0
+        }
+        animator3.startAnimation(afterDelay: 0.25)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.errorMessageLabel.isHidden = true
+            self.errorMessageLabel.alpha = 1
+        }
     }
 }
 
