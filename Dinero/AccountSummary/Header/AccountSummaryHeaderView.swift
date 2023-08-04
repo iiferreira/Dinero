@@ -48,8 +48,8 @@ class AccountSummaryHeaderView : UIView {
         ShakeyBell.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            bottomAnchor.constraint(equalToSystemSpacingBelow: ShakeyBell.bottomAnchor, multiplier: 0.5),
-            trailingAnchor.constraint(equalTo: ShakeyBell.trailingAnchor, constant: 0.5),
+            bottomAnchor.constraint(equalToSystemSpacingBelow: ShakeyBell.bottomAnchor, multiplier: 1),
+            trailingAnchor.constraint(equalTo: ShakeyBell.trailingAnchor, constant: 10),
             ShakeyBell.widthAnchor.constraint(equalToConstant: 24),
             ShakeyBell.heightAnchor.constraint(equalToConstant: 24),
         ])
