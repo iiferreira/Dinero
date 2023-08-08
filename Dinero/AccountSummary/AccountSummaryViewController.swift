@@ -181,4 +181,5 @@ extension AccountSummaryViewController {
             AccountSummaryTableViewCell.ViewModel(accountType: $0.type, accountName: $0.name, balance: $0.amount)
         })
     }
+    //Added this
 }
