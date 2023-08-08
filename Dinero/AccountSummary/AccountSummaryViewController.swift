@@ -12,11 +12,12 @@ class AccountSummaryViewController : UIViewController {
     
     // Request Models
     var profile : Profile?
-    
+    var accounts : [Account] = []
+
     //View Models
     var headerViewModel = AccountSummaryHeaderView.ViewModel(welcomeMessage: "Welcome", name: "", date: Date())
     
-    var accounts : [AccountSummaryTableViewCell.ViewModel] = []
+    var accountCellViewModels : [AccountSummaryTableViewCell.ViewModel] = []
     
     let tableView = UITableView()
     let headerView = AccountSummaryHeaderView(frame: .zero)
@@ -93,16 +94,16 @@ extension AccountSummaryViewController {
 
 extension AccountSummaryViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return accounts.count
+        return accountCellViewModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard !accounts.isEmpty else { return  UITableViewCell() }
+        guard !accountCellViewModels.isEmpty else { return  UITableViewCell() }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryTableViewCell.cellIdentifier, for: indexPath) as! AccountSummaryTableViewCell
         
-        let account = accounts[indexPath.row]
+        let account = accountCellViewModels[indexPath.row]
         cell.configure(with: account)
         
         return cell
@@ -125,9 +126,9 @@ extension AccountSummaryViewController {
         let investment = AccountSummaryTableViewCell.ViewModel(accountType: .Investment,
                                                                accountName: "Deposit", balance: 3290.99)
         
-        accounts.append(savings)
-        accounts.append(visa)
-        accounts.append(investment)
+        accountCellViewModels.append(savings)
+        accountCellViewModels.append(visa)
+        accountCellViewModels.append(investment)
     }
 }
 
@@ -157,11 +158,27 @@ extension AccountSummaryViewController {
             }
         }
         
-        fetchData()
+        fetchAccounts(forUserId: "1") { result in
+            switch result {
+                
+            case .success( let accounts ):
+                self.accounts = accounts
+                self.configureTableCells(with: accounts)
+                self.tableView.reloadData()
+            case .failure( let error ):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     private func configureTableHeaderView(with profile: Profile) {
         let vm = AccountSummaryHeaderView.ViewModel(welcomeMessage: "Good morning", name: profile.firstName, date: Date())
         headerView.configure(viewModel: vm)
+    }
+    
+    private func configureTableCells(with accounts: [Account]) {
+        accountCellViewModels = accounts.map({
+            AccountSummaryTableViewCell.ViewModel(accountType: $0.type, accountName: $0.name, balance: $0.amount)
+        })
     }
 }

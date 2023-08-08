@@ -38,7 +38,7 @@ class AccountSummaryHeaderView : UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
-       
+        
     }
     
     override var intrinsicContentSize: CGSize {
@@ -73,11 +73,8 @@ class AccountSummaryHeaderView : UIView {
 
 extension AccountSummaryHeaderView {
     func configure(viewModel: ViewModel) {
-        DispatchQueue.main.async {
-            self.welcomeLabel.text = viewModel.welcomeMessage
-            self.nameLabel.text = viewModel.name
-            self.dateLabel.text = viewModel.dateFormatted
-        }
-        
+        self.welcomeLabel.text = viewModel.welcomeMessage
+        self.nameLabel.text = viewModel.name
+        self.dateLabel.text = viewModel.dateFormatted
     }
 }

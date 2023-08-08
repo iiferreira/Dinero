@@ -6,15 +6,15 @@
 //
 
 import UIKit
+import Foundation
+
+enum AccountType: String, Codable {
+    case Banking
+    case CreditCard
+    case Investment
+}
 
 class AccountSummaryTableViewCell : UITableViewCell {
-    
-    enum AccountType: String {
-        case Banking
-        case CreditCard
-        case Investment
-    }
-    
     struct ViewModel {
         let accountType : AccountType
         let accountName : String
@@ -31,7 +31,7 @@ class AccountSummaryTableViewCell : UITableViewCell {
     static let rowHeight : CGFloat = 100
     
     let underlineView = UIView()
-
+    
     let typeLabel = UILabel()
     let nameLabel = UILabel()
     
@@ -84,7 +84,7 @@ extension AccountSummaryTableViewCell {
         
         chevronImageView.translatesAutoresizingMaskIntoConstraints = false
         chevronImageView.tintColor = appColor
-
+        
     }
     
     private func layout() {
@@ -116,7 +116,7 @@ extension AccountSummaryTableViewCell {
         NSLayoutConstraint.activate([
             trailingStackView.topAnchor.constraint(equalToSystemSpacingBelow: contentView.safeAreaLayoutGuide.topAnchor, multiplier: 2),
             contentView.trailingAnchor.constraint(equalToSystemSpacingAfter: trailingStackView.trailingAnchor, multiplier: 3)
-        
+            
         ])
         
         NSLayoutConstraint.activate([
