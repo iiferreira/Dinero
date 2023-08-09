@@ -13,6 +13,8 @@
 		1F3F25942A7068B800D6F7F9 /* CurrencyFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F25932A7068B800D6F7F9 /* CurrencyFormatterTest.swift */; };
 		1F5D66042A82CDCE00B36CE1 /* ProfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D66032A82CDCE00B36CE1 /* ProfileTest.swift */; };
 		1F5D66062A82CF6B00B36CE1 /* AccountTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D66052A82CF6B00B36CE1 /* AccountTest.swift */; };
+		1F5D66082A840A2A00B36CE1 /* SkeletonLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D66072A840A2A00B36CE1 /* SkeletonLoadable.swift */; };
+		1F5D660A2A840B2200B36CE1 /* SkeletonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D66092A840B2200B36CE1 /* SkeletonCell.swift */; };
 		1F6719A12A53440E00EED807 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6719A02A53440E00EED807 /* UIViewController+Utils.swift */; };
 		1F6719A32A53486100EED807 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6719A22A53486100EED807 /* MainViewController.swift */; };
 		1F68DF172A818A6600056EBF /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F68DF162A818A6600056EBF /* Date+Utils.swift */; };
@@ -52,6 +54,8 @@
 		1F3F25932A7068B800D6F7F9 /* CurrencyFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatterTest.swift; sourceTree = "<group>"; };
 		1F5D66032A82CDCE00B36CE1 /* ProfileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTest.swift; sourceTree = "<group>"; };
 		1F5D66052A82CF6B00B36CE1 /* AccountTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTest.swift; sourceTree = "<group>"; };
+		1F5D66072A840A2A00B36CE1 /* SkeletonLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoadable.swift; sourceTree = "<group>"; };
+		1F5D66092A840B2200B36CE1 /* SkeletonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonCell.swift; sourceTree = "<group>"; };
 		1F6719A02A53440E00EED807 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
 		1F6719A22A53486100EED807 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1F68DF162A818A6600056EBF /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
@@ -137,6 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				1F1155D32A66E2D8001C182C /* AccountSummaryTableViewCell.swift */,
+				1F5D66072A840A2A00B36CE1 /* SkeletonLoadable.swift */,
+				1F5D66092A840B2200B36CE1 /* SkeletonCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -360,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F6719A12A53440E00EED807 /* UIViewController+Utils.swift in Sources */,
+				1F5D660A2A840B2200B36CE1 /* SkeletonCell.swift in Sources */,
 				1F68DF172A818A6600056EBF /* Date+Utils.swift in Sources */,
 				1FC00A802A423C0E005C3501 /* LoginView.swift in Sources */,
 				1F13CC172A50585F0042CE73 /* LocalState.swift in Sources */,
@@ -377,6 +384,7 @@
 				1FFF14722A4658C300822024 /* OnboardingContainerViewController.swift in Sources */,
 				1F1155D42A66E2D8001C182C /* AccountSummaryTableViewCell.swift in Sources */,
 				1F13CC142A4F42490042CE73 /* HomeViewController.swift in Sources */,
+				1F5D66082A840A2A00B36CE1 /* SkeletonLoadable.swift in Sources */,
 				1F68DF192A818C0400056EBF /* AccountSummaryViewController+Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

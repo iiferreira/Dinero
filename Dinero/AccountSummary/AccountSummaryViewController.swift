@@ -22,6 +22,7 @@ class AccountSummaryViewController : UIViewController {
     let tableView = UITableView()
     let headerView = AccountSummaryHeaderView(frame: .zero)
     let refreshControl = UIRefreshControl()
+    var isLoaded = false
     
     lazy var logoutBarButtonItem : UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
@@ -53,6 +54,7 @@ extension AccountSummaryViewController {
         setupTableView()
         setupTableHeaderView()
         setupRefreshControl()
+        setupSkeletons()
         fetchData()
     }
     
@@ -64,6 +66,7 @@ extension AccountSummaryViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         
         tableView.register(AccountSummaryTableViewCell.self, forCellReuseIdentifier: AccountSummaryTableViewCell.cellIdentifier)
+        tableView.register(SkeletonCell.self, forCellReuseIdentifier: SkeletonCell.reuseID)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = AccountSummaryTableViewCell.rowHeight
         tableView.tableFooterView = UIView()
@@ -108,12 +111,15 @@ extension AccountSummaryViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard !accountCellViewModels.isEmpty else { return  UITableViewCell() }
+        if isLoaded {
+            let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryTableViewCell.cellIdentifier, for: indexPath) as! AccountSummaryTableViewCell
+            
+            let account = accountCellViewModels[indexPath.row]
+            cell.configure(with: account)
+            return cell
+        }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryTableViewCell.cellIdentifier, for: indexPath) as! AccountSummaryTableViewCell
-        
-        let account = accountCellViewModels[indexPath.row]
-        cell.configure(with: account)
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: SkeletonCell.reuseID, for: indexPath) as! SkeletonCell
         return cell
     }
 }
@@ -153,6 +159,7 @@ extension AccountSummaryViewController {
         group.leave()
         }
         group.notify(queue: .main) {
+            self.isLoaded = true
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
         }
@@ -167,6 +174,13 @@ extension AccountSummaryViewController {
         accountCellViewModels = accounts.map({
             AccountSummaryTableViewCell.ViewModel(accountType: $0.type, accountName: $0.name, balance: $0.amount)
         })
+    }
+    
+    private func setupSkeletons() {
+            let row = Account.makeSkeleton()
+            accounts = Array(repeating: row, count: 10)
+            
+            configureTableCells(with: accounts)
     }
 }
 
