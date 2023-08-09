@@ -10,17 +10,18 @@ import UIKit
 
 class AccountSummaryViewController : UIViewController {
     
-    // Request Models
+    //Request Models
     var profile : Profile?
     var accounts : [Account] = []
 
     //View Models
     var headerViewModel = AccountSummaryHeaderView.ViewModel(welcomeMessage: "Welcome", name: "", date: Date())
-    
     var accountCellViewModels : [AccountSummaryTableViewCell.ViewModel] = []
     
+    //Components
     let tableView = UITableView()
     let headerView = AccountSummaryHeaderView(frame: .zero)
+    let refreshControl = UIRefreshControl()
     
     lazy var logoutBarButtonItem : UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
@@ -32,11 +33,7 @@ class AccountSummaryViewController : UIViewController {
         super.viewDidLoad()
         setup()
         layout()
-        setupNavigationBar()
-    }
-    
-    private func setupNavigationBar() {
-        navigationItem.rightBarButtonItem = logoutBarButtonItem
+        
     }
     
     override func viewSafeAreaInsetsDidChange() {
@@ -52,10 +49,11 @@ class AccountSummaryViewController : UIViewController {
 extension AccountSummaryViewController {
     
     private func setup() {
+        setupNavigationBar()
         setupTableView()
         setupTableHeaderView()
-        //fetchAccounts()
-        fetchDataAndLoadViews()
+        setupRefreshControl()
+        fetchData()
     }
     
     private func setupTableView() {
@@ -90,6 +88,16 @@ extension AccountSummaryViewController {
         
         tableView.tableHeaderView = headerView
     }
+    
+    private func setupNavigationBar() {
+        navigationItem.rightBarButtonItem = logoutBarButtonItem
+    }
+    
+    private func setupRefreshControl() {
+        refreshControl.tintColor = appColor
+        refreshControl.addTarget(self, action: #selector(refreshContent), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
 }
 
 extension AccountSummaryViewController : UITableViewDataSource {
@@ -114,60 +122,39 @@ extension AccountSummaryViewController : UITableViewDelegate {
     
 }
 
-extension AccountSummaryViewController {
-    
-    private func fetchData() {
-        let savings = AccountSummaryTableViewCell.ViewModel(accountType: .Banking,
-                                                            accountName: "Basic Savings", balance: 929466.23)
-        
-        let visa = AccountSummaryTableViewCell.ViewModel(accountType: .CreditCard,
-                                                         accountName: "Visa Card", balance: 25000.52)
-        
-        let investment = AccountSummaryTableViewCell.ViewModel(accountType: .Investment,
-                                                               accountName: "Deposit", balance: 3290.99)
-        
-        accountCellViewModels.append(savings)
-        accountCellViewModels.append(visa)
-        accountCellViewModels.append(investment)
-    }
-}
-
-
-//MARK: -ACTIONS
-
-extension AccountSummaryViewController {
-    @objc func logoutTapped(_ sender: UIButton) {
-        NotificationCenter.default.post(name: .logout, object: nil)
-    }
-}
-
 //MARK: - Networking
 extension AccountSummaryViewController {
-    private func fetchDataAndLoadViews() {
-        fetchProfile(forUserId: "1") { result in
+    private func fetchData() {
+        
+        let group = DispatchGroup()
+        
+        let randomUser = String(Int.random(in: 1..<4))
+        
+        group.enter()
+        fetchProfile(forUserId: randomUser) { result in
             switch result {
             case .success(let profile):
                 self.profile = profile
                 self.configureTableHeaderView(with: profile)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                
             case .failure(let error):
                 print(error.localizedDescription)
             }
+        group.leave()
         }
-        
-        fetchAccounts(forUserId: "1") { result in
+        group.enter()
+        fetchAccounts(forUserId: randomUser) { result in
             switch result {
-                
             case .success( let accounts ):
                 self.accounts = accounts
                 self.configureTableCells(with: accounts)
-                self.tableView.reloadData()
             case .failure( let error ):
                 print(error.localizedDescription)
             }
+        group.leave()
+        }
+        group.notify(queue: .main) {
+            self.tableView.reloadData()
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
     
@@ -181,5 +168,15 @@ extension AccountSummaryViewController {
             AccountSummaryTableViewCell.ViewModel(accountType: $0.type, accountName: $0.name, balance: $0.amount)
         })
     }
-    //Added this
+}
+
+//MARK: -ACTIONS
+extension AccountSummaryViewController {
+    @objc func logoutTapped(_ sender: UIButton) {
+        NotificationCenter.default.post(name: .logout, object: nil)
+    }
+    
+    @objc func refreshContent() {
+        fetchData()
+    }
 }

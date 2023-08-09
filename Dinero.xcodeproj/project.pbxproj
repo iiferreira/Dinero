@@ -11,6 +11,8 @@
 		1F13CC142A4F42490042CE73 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F13CC132A4F42490042CE73 /* HomeViewController.swift */; };
 		1F13CC172A50585F0042CE73 /* LocalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F13CC162A50585E0042CE73 /* LocalState.swift */; };
 		1F3F25942A7068B800D6F7F9 /* CurrencyFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F25932A7068B800D6F7F9 /* CurrencyFormatterTest.swift */; };
+		1F5D66042A82CDCE00B36CE1 /* ProfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D66032A82CDCE00B36CE1 /* ProfileTest.swift */; };
+		1F5D66062A82CF6B00B36CE1 /* AccountTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D66052A82CF6B00B36CE1 /* AccountTest.swift */; };
 		1F6719A12A53440E00EED807 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6719A02A53440E00EED807 /* UIViewController+Utils.swift */; };
 		1F6719A32A53486100EED807 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6719A22A53486100EED807 /* MainViewController.swift */; };
 		1F68DF172A818A6600056EBF /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F68DF162A818A6600056EBF /* Date+Utils.swift */; };
@@ -48,6 +50,8 @@
 		1F13CC162A50585E0042CE73 /* LocalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalState.swift; sourceTree = "<group>"; };
 		1F3F258A2A70681200D6F7F9 /* DineroUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DineroUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3F25932A7068B800D6F7F9 /* CurrencyFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatterTest.swift; sourceTree = "<group>"; };
+		1F5D66032A82CDCE00B36CE1 /* ProfileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTest.swift; sourceTree = "<group>"; };
+		1F5D66052A82CF6B00B36CE1 /* AccountTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTest.swift; sourceTree = "<group>"; };
 		1F6719A02A53440E00EED807 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
 		1F6719A22A53486100EED807 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1F68DF162A818A6600056EBF /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
@@ -114,7 +118,8 @@
 		1F3F258B2A70681300D6F7F9 /* DineroUnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				1F3F25932A7068B800D6F7F9 /* CurrencyFormatterTest.swift */,
+				1F5D66022A82CDB300B36CE1 /* AccountSummary */,
+				1F5D66012A82CDA300B36CE1 /* Utils */,
 			);
 			path = DineroUnitTests;
 			sourceTree = "<group>";
@@ -134,6 +139,23 @@
 				1F1155D32A66E2D8001C182C /* AccountSummaryTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		1F5D66012A82CDA300B36CE1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1F3F25932A7068B800D6F7F9 /* CurrencyFormatterTest.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		1F5D66022A82CDB300B36CE1 /* AccountSummary */ = {
+			isa = PBXGroup;
+			children = (
+				1F5D66032A82CDCE00B36CE1 /* ProfileTest.swift */,
+				1F5D66052A82CF6B00B36CE1 /* AccountTest.swift */,
+			);
+			path = AccountSummary;
 			sourceTree = "<group>";
 		};
 		1F7E1D8E2A66BABA0090DD68 /* AccountSummary */ = {
@@ -328,6 +350,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F3F25942A7068B800D6F7F9 /* CurrencyFormatterTest.swift in Sources */,
+				1F5D66062A82CF6B00B36CE1 /* AccountTest.swift in Sources */,
+				1F5D66042A82CDCE00B36CE1 /* ProfileTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

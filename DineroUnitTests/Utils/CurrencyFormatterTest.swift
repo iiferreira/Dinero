@@ -21,13 +21,13 @@ class Test: XCTestCase {
     
     func testShouldBeVisible() throws {
         let result = formatter.breakIntoDollarsAndCents(929466.23)
-        XCTAssertEqual(result.0, "929.466")
+        XCTAssertEqual(result.0, "929,466")
         XCTAssertEqual(result.1, "23")
         
     }
     
     func testDollarsFormatted() throws {
         let newResult = formatter.dollarsFormatted(1000)
-        XCTAssertEqual(newResult, "1.000,00 Reais brasileiros")
+        XCTAssertEqual(newResult, "1,000.00 US dollars")
     }
 }
