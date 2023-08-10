@@ -8,6 +8,11 @@
 import UIKit
 
 
+enum alertError  {
+    case invalidResponse
+    case decodingError
+}
+
 class AccountSummaryViewController : UIViewController {
     
     //Request Models
@@ -154,7 +159,7 @@ extension AccountSummaryViewController {
                 self.accounts = accounts
                 self.configureTableCells(with: accounts)
             case .failure( let error ):
-                print(error.localizedDescription)
+                self.displayError(error)
             }
         group.leave()
         }
@@ -176,6 +181,29 @@ extension AccountSummaryViewController {
         })
     }
     
+    private func displayError(_ error: NetworkError) {
+        var alertTitle : String
+        var alertMessage : String
+        
+        switch error {
+        case .serverError:
+            alertTitle = "Internet error"
+            alertMessage = "Can't Connect to server"
+        case .decodingError:
+            alertTitle = "Decoding error"
+            alertMessage = "Can't decode data"
+        }
+        
+        self.showErrorAlert(withTitle: alertTitle, message: alertMessage)
+    }
+    
+    private func showErrorAlert(withTitle: String, message: String) {
+        let alert = UIAlertController(title: "Internet Error", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel)
+        alert.addAction(action)
+        present(alert, animated: true)
+    }
+    
     private func setupSkeletons() {
             let row = Account.makeSkeleton()
             accounts = Array(repeating: row, count: 10)
@@ -191,6 +219,15 @@ extension AccountSummaryViewController {
     }
     
     @objc func refreshContent() {
+        reset()
+        setupSkeletons()
+        self.tableView.reloadData()
         fetchData()
+    }
+    
+    private func reset() {
+        profile = nil
+        accounts = []
+        isLoaded = false
     }
 }
