@@ -27,6 +27,11 @@ class AccountSummaryViewController : UIViewController {
     let tableView = UITableView()
     let headerView = AccountSummaryHeaderView(frame: .zero)
     let refreshControl = UIRefreshControl()
+    
+    //Networking
+    let profileManager = ProfileManager()
+    let accountManager = AccountManager()
+    
     var isLoaded = false
     
     lazy var logoutBarButtonItem : UIBarButtonItem = {
@@ -142,7 +147,7 @@ extension AccountSummaryViewController {
         let randomUser = String(Int.random(in: 1..<4))
         
         group.enter()
-        fetchProfile(forUserId: randomUser) { result in
+        profileManager.fetchProfile(forUserId: randomUser) { result in
             switch result {
             case .success(let profile):
                 self.profile = profile
@@ -153,7 +158,7 @@ extension AccountSummaryViewController {
         group.leave()
         }
         group.enter()
-        fetchAccounts(forUserId: randomUser) { result in
+        accountManager.fetchAccounts(forUserId: randomUser) { result in
             switch result {
             case .success( let accounts ):
                 self.accounts = accounts
@@ -180,10 +185,21 @@ extension AccountSummaryViewController {
             AccountSummaryTableViewCell.ViewModel(accountType: $0.type, accountName: $0.name, balance: $0.amount)
         })
     }
-    
+}
+
+
+//MARK: - Error handling and skeleton setup.
+extension AccountSummaryViewController {
     private func displayError(_ error: NetworkError) {
-        var alertTitle : String
-        var alertMessage : String
+        
+        let titleAndMessageErrorMsg = titleAndMessageErrorMsg(error)
+        self.showErrorAlert(withTitle: titleAndMessageErrorMsg.0,
+                            message: titleAndMessageErrorMsg.1)
+    }
+    
+    private func titleAndMessageErrorMsg(_ error:NetworkError) -> (String,String) {
+        let alertTitle: String
+        let alertMessage: String
         
         switch error {
         case .serverError:
@@ -194,14 +210,15 @@ extension AccountSummaryViewController {
             alertMessage = "Can't decode data"
         }
         
-        self.showErrorAlert(withTitle: alertTitle, message: alertMessage)
+        return (alertTitle, alertMessage)
     }
     
-    private func showErrorAlert(withTitle: String, message: String) {
-        let alert = UIAlertController(title: "Internet Error", message: message, preferredStyle: .alert)
+    private func showErrorAlert(withTitle title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .cancel)
         alert.addAction(action)
         present(alert, animated: true)
+        
     }
     
     private func setupSkeletons() {
@@ -211,6 +228,7 @@ extension AccountSummaryViewController {
             configureTableCells(with: accounts)
     }
 }
+
 
 //MARK: -ACTIONS
 extension AccountSummaryViewController {
@@ -229,5 +247,15 @@ extension AccountSummaryViewController {
         profile = nil
         accounts = []
         isLoaded = false
+    }
+}
+
+extension AccountSummaryViewController {
+    func titleAndMessageErrorMsgForTesting(_ error:NetworkError) -> (String,String) {
+        return titleAndMessageErrorMsg(error)
+    }
+    
+    func alertForTesting(alert: UIAlertController) -> UIAlertController {
+        return alert
     }
 }
