@@ -32,6 +32,13 @@ class AccountSummaryViewController : UIViewController {
     let profileManager = ProfileManager()
     let accountManager = AccountManager()
     
+    //Error alert
+    lazy var errorAlert : UIAlertController = {
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        return alert
+    }()
+    
     var isLoaded = false
     
     lazy var logoutBarButtonItem : UIBarButtonItem = {
@@ -214,10 +221,12 @@ extension AccountSummaryViewController {
     }
     
     private func showErrorAlert(withTitle title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel)
-        alert.addAction(action)
-        present(alert, animated: true)
+//        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+//        let action = UIAlertAction(title: "OK", style: .cancel)
+//        alert.addAction(action)
+        errorAlert.title = title
+        errorAlert.message = message
+        present(errorAlert, animated: true)
         
     }
     
@@ -250,12 +259,13 @@ extension AccountSummaryViewController {
     }
 }
 
+
+//MARK: - Unit testing
 extension AccountSummaryViewController {
     func titleAndMessageErrorMsgForTesting(_ error:NetworkError) -> (String,String) {
         return titleAndMessageErrorMsg(error)
-    }
-    
-    func alertForTesting(alert: UIAlertController) -> UIAlertController {
-        return alert
-    }
+    }    
+//    func alertForTesting(alert: UIAlertController) -> UIAlertController {
+//        return alert
+//    }
 }

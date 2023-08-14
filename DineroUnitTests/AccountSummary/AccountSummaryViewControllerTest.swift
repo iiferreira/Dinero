@@ -12,12 +12,14 @@ import XCTest
 
 class AccountSummaryViewControllerTest : XCTestCase {
     var vc : AccountSummaryViewController!
-    //var mockManager : MockManager!
+    var mockManager : MockProfileManager!
     
     
     override func setUp() {
         super.setUp()
         vc = AccountSummaryViewController()
+        mockManager = MockProfileManager()
+        vc.profile = mockManager.profile
     }
     
     func testErrorMsgs() throws {
@@ -30,5 +32,7 @@ class AccountSummaryViewControllerTest : XCTestCase {
         XCTAssertEqual(decodingError.0, "Decoding error")
         XCTAssertEqual(decodingError.1, "Can't decode data")
     }
+    
+
     
 }
