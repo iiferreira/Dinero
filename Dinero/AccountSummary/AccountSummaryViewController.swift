@@ -265,7 +265,5 @@ extension AccountSummaryViewController {
     func titleAndMessageErrorMsgForTesting(_ error:NetworkError) -> (String,String) {
         return titleAndMessageErrorMsg(error)
     }    
-//    func alertForTesting(alert: UIAlertController) -> UIAlertController {
-//        return alert
-//    }
+
 }

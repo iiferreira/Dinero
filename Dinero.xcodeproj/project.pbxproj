@@ -14,6 +14,7 @@
 		1F15CB4C2A85681F0055287C /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15CB4B2A85681F0055287C /* ProfileManager.swift */; };
 		1F15CB4E2A856C040055287C /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15CB4D2A856C040055287C /* AccountManager.swift */; };
 		1F15CB522A85787E0055287C /* AccountSummaryViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15CB512A85787E0055287C /* AccountSummaryViewControllerTest.swift */; };
+		1F2632DE2A8D400700F9C9B0 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2632DD2A8D400700F9C9B0 /* ResetPasswordViewController.swift */; };
 		1F3F25942A7068B800D6F7F9 /* CurrencyFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F25932A7068B800D6F7F9 /* CurrencyFormatterTest.swift */; };
 		1F5D66042A82CDCE00B36CE1 /* ProfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D66032A82CDCE00B36CE1 /* ProfileTest.swift */; };
 		1F5D66062A82CF6B00B36CE1 /* AccountTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D66052A82CF6B00B36CE1 /* AccountTest.swift */; };
@@ -57,6 +58,7 @@
 		1F15CB4B2A85681F0055287C /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
 		1F15CB4D2A856C040055287C /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		1F15CB512A85787E0055287C /* AccountSummaryViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryViewControllerTest.swift; sourceTree = "<group>"; };
+		1F2632DD2A8D400700F9C9B0 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		1F3F258A2A70681200D6F7F9 /* DineroUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DineroUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3F25932A7068B800D6F7F9 /* CurrencyFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatterTest.swift; sourceTree = "<group>"; };
 		1F5D66032A82CDCE00B36CE1 /* ProfileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTest.swift; sourceTree = "<group>"; };
@@ -133,6 +135,14 @@
 				1F151F7B2A86B18300E39E91 /* MockProfileManager.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		1F2632DC2A8D3FF000F9C9B0 /* ResetPasswordViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1F2632DD2A8D400700F9C9B0 /* ResetPasswordViewController.swift */,
+			);
+			path = ResetPasswordViewController;
 			sourceTree = "<group>";
 		};
 		1F3F258B2A70681300D6F7F9 /* DineroUnitTests */ = {
@@ -247,6 +257,7 @@
 		1FC00A7E2A423BE3005C3501 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				1F2632DC2A8D3FF000F9C9B0 /* ResetPasswordViewController */,
 				1FC00A6D2A4238A3005C3501 /* LoginViewController.swift */,
 				1FC00A7F2A423C0E005C3501 /* LoginView.swift */,
 			);
@@ -386,6 +397,7 @@
 				1F6719A12A53440E00EED807 /* UIViewController+Utils.swift in Sources */,
 				1F5D660A2A840B2200B36CE1 /* SkeletonCell.swift in Sources */,
 				1F68DF172A818A6600056EBF /* Date+Utils.swift in Sources */,
+				1F2632DE2A8D400700F9C9B0 /* ResetPasswordViewController.swift in Sources */,
 				1F15CB4E2A856C040055287C /* AccountManager.swift in Sources */,
 				1F15CB4C2A85681F0055287C /* ProfileManager.swift in Sources */,
 				1FC00A802A423C0E005C3501 /* LoginView.swift in Sources */,

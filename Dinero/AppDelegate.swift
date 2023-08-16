@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var accountViewController = AccountSummaryViewController()
     var loginViewController = LoginViewController()
     var onboardingContainerViewController = OnboardingContainerViewController()
+    var resetPasswordViewController = ResetPasswordViewController()
     var mainViewController = MainViewController()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -85,6 +86,10 @@ extension AppDelegate {
 extension AppDelegate : LoginViewControllerDelegate {
     func didLogin() {
        displayNextScreen()
+    }
+    
+    func didResetPassword() {
+        setRootViewController(resetPasswordViewController)
     }
 }
 
