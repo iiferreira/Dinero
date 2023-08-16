@@ -15,6 +15,7 @@
 		1F15CB4E2A856C040055287C /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15CB4D2A856C040055287C /* AccountManager.swift */; };
 		1F15CB522A85787E0055287C /* AccountSummaryViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15CB512A85787E0055287C /* AccountSummaryViewControllerTest.swift */; };
 		1F2632DE2A8D400700F9C9B0 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2632DD2A8D400700F9C9B0 /* ResetPasswordViewController.swift */; };
+		1F2632E12A8D54F500F9C9B0 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2632E02A8D54F500F9C9B0 /* PasswordTextField.swift */; };
 		1F3F25942A7068B800D6F7F9 /* CurrencyFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F25932A7068B800D6F7F9 /* CurrencyFormatterTest.swift */; };
 		1F5D66042A82CDCE00B36CE1 /* ProfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D66032A82CDCE00B36CE1 /* ProfileTest.swift */; };
 		1F5D66062A82CF6B00B36CE1 /* AccountTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D66052A82CF6B00B36CE1 /* AccountTest.swift */; };
@@ -59,6 +60,7 @@
 		1F15CB4D2A856C040055287C /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		1F15CB512A85787E0055287C /* AccountSummaryViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryViewControllerTest.swift; sourceTree = "<group>"; };
 		1F2632DD2A8D400700F9C9B0 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		1F2632E02A8D54F500F9C9B0 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		1F3F258A2A70681200D6F7F9 /* DineroUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DineroUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3F25932A7068B800D6F7F9 /* CurrencyFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatterTest.swift; sourceTree = "<group>"; };
 		1F5D66032A82CDCE00B36CE1 /* ProfileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTest.swift; sourceTree = "<group>"; };
@@ -140,9 +142,18 @@
 		1F2632DC2A8D3FF000F9C9B0 /* ResetPasswordViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1F2632DF2A8D54D600F9C9B0 /* Components */,
 				1F2632DD2A8D400700F9C9B0 /* ResetPasswordViewController.swift */,
 			);
 			path = ResetPasswordViewController;
+			sourceTree = "<group>";
+		};
+		1F2632DF2A8D54D600F9C9B0 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1F2632E02A8D54F500F9C9B0 /* PasswordTextField.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		1F3F258B2A70681300D6F7F9 /* DineroUnitTests */ = {
@@ -399,6 +410,7 @@
 				1F68DF172A818A6600056EBF /* Date+Utils.swift in Sources */,
 				1F2632DE2A8D400700F9C9B0 /* ResetPasswordViewController.swift in Sources */,
 				1F15CB4E2A856C040055287C /* AccountManager.swift in Sources */,
+				1F2632E12A8D54F500F9C9B0 /* PasswordTextField.swift in Sources */,
 				1F15CB4C2A85681F0055287C /* ProfileManager.swift in Sources */,
 				1FC00A802A423C0E005C3501 /* LoginView.swift in Sources */,
 				1F13CC172A50585F0042CE73 /* LocalState.swift in Sources */,

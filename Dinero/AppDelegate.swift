@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .systemBackground
 
         loginViewController.delegate = self
+        resetPasswordViewController.delegate = self
         onboardingContainerViewController.delegate = self
         
         registerForNotifications()
@@ -90,6 +91,12 @@ extension AppDelegate : LoginViewControllerDelegate {
     
     func didResetPassword() {
         setRootViewController(resetPasswordViewController)
+    }
+}
+
+extension AppDelegate : ResetPasswordDelegate {
+    func resetPassword() {
+        setRootViewController(loginViewController)
     }
 }
 
