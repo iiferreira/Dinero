@@ -14,7 +14,7 @@ class PasswordTextField : UIView {
     
     let passwordStack = UIStackView()
     let lockImage = UIImageView()
-    let passwordTextField = UITextField()
+    let textfield = UITextField()
     let eyeImage = UIImageView()
     
     init(placeholderText: String ) {
@@ -31,13 +31,13 @@ class PasswordTextField : UIView {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 240, height: 44)
+        return CGSize(width: 240, height: 24)
     }
     
     func setup() {
         passwordStack.translatesAutoresizingMaskIntoConstraints = false
         lockImage.translatesAutoresizingMaskIntoConstraints = false
-        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        textfield.translatesAutoresizingMaskIntoConstraints = false
         eyeImage.translatesAutoresizingMaskIntoConstraints = false
         
         passwordStack.axis = .horizontal
@@ -46,18 +46,18 @@ class PasswordTextField : UIView {
         lockImage.image = UIImage(systemName: "lock.fill")?.withRenderingMode(.automatic)
         eyeImage.image = UIImage(systemName: "eye.slash.circle")?.withRenderingMode(.automatic)
         
-        passwordTextField.placeholder = placeholderText
-        passwordTextField.textColor = .label
-        passwordTextField.widthAnchor.constraint(equalToConstant: 220).isActive = true
-        passwordTextField.isSecureTextEntry = true
+        textfield.placeholder = placeholderText
+        textfield.textColor = .label
+        textfield.widthAnchor.constraint(equalToConstant: 220).isActive = true
+        textfield.isSecureTextEntry = true
         //passwordTextField.delegate = self
-        passwordTextField.enablePasswordToggle()
+        textfield.enablePasswordToggle()
         
     }
     
     func layout() {
         passwordStack.addArrangedSubview(lockImage)
-        passwordStack.addArrangedSubview(passwordTextField)
+        passwordStack.addArrangedSubview(textfield)
         addSubview(passwordStack)
         
         NSLayoutConstraint.activate([

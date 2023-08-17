@@ -15,10 +15,7 @@ class ResetPasswordViewController: UIViewController {
     
     weak var delegate : ResetPasswordDelegate?
     
-    let passwordStack = UIStackView()
-    let lockImage = UIImageView()
-    let passwordTextField = UITextField()
-    let eyeImage = UIImageView()
+    let passwordTextField = PasswordTextField(placeholderText: "New Password")
     let divider = UIView()
     let infoLabel = UILabel()
     
@@ -35,73 +32,52 @@ class ResetPasswordViewController: UIViewController {
     }
     
     func setup() {
-        
-        passwordStack.translatesAutoresizingMaskIntoConstraints = false
-        lockImage.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
-        eyeImage.translatesAutoresizingMaskIntoConstraints = false
         divider.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         resetPasswordBtn.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        passwordStack.axis = .horizontal
-        passwordStack.spacing = 5
-    
-        lockImage.image = UIImage(systemName: "lock.fill")?.withRenderingMode(.automatic)
-        eyeImage.image = UIImage(systemName: "eye.slash.circle")?.withRenderingMode(.automatic)
-        
-        passwordTextField.placeholder = "New Password"
-        passwordTextField.textColor = .label
-        passwordTextField.widthAnchor.constraint(equalToConstant: 220).isActive = true
-        passwordTextField.isSecureTextEntry = true
-        //passwordTextField.delegate = self
-        passwordTextField.enablePasswordToggle()
         
         resetPasswordBtn.setTitle("Reset Password", for: .normal)
         resetPasswordBtn.configuration = .filled()
         resetPasswordBtn.configuration?.imagePadding = 8
         resetPasswordBtn.addTarget(self, action: #selector(resetPasswordTapped), for: .primaryActionTriggered)
         
-        divider.backgroundColor = .gray
+        divider.backgroundColor = .separator
         
         infoLabel.text = "Enter your password."
         infoLabel.textColor = .red
+        infoLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         infoLabel.isHidden = true
     }
     
     func layout() {
-        passwordStack.addArrangedSubview(lockImage)
-        passwordStack.addArrangedSubview(passwordTextField)
-        view.addSubview(resetPasswordBtn)
-        //passwordStack.addArrangedSubview(eyeImage)
-        
-        view.addSubview(passwordStack)
+        view.addSubview(passwordTextField)
         view.addSubview(divider)
         view.addSubview(infoLabel)
+        view.addSubview(resetPasswordBtn)
         
         NSLayoutConstraint.activate([
-            passwordStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            passwordStack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            passwordTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
-            divider.topAnchor.constraint(equalTo: passwordStack.bottomAnchor, constant: 8),
-            divider.leadingAnchor.constraint(equalTo: passwordStack.leadingAnchor),
-            divider.trailingAnchor.constraint(equalTo: passwordStack.trailingAnchor),
-            divider.heightAnchor.constraint(equalToConstant: 0.5)
+            divider.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 0.5),
+            divider.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            divider.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+            divider.heightAnchor.constraint(equalToConstant: 1.5)
         ])
         
         NSLayoutConstraint.activate([
-            infoLabel.topAnchor.constraint(equalTo: divider.bottomAnchor, constant: 8),
-            infoLabel.leadingAnchor.constraint(equalTo: passwordStack.leadingAnchor),
-            infoLabel.trailingAnchor.constraint(equalTo: passwordStack.trailingAnchor),
+            infoLabel.topAnchor.constraint(equalToSystemSpacingBelow: divider.bottomAnchor, multiplier: 1),
+            infoLabel.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            infoLabel.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
         ])
-        
+
         NSLayoutConstraint.activate([
             resetPasswordBtn.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 12),
-            resetPasswordBtn.leadingAnchor.constraint(equalTo: passwordStack.leadingAnchor),
-            resetPasswordBtn.trailingAnchor.constraint(equalTo: passwordStack.trailingAnchor),
+            resetPasswordBtn.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            resetPasswordBtn.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
         ])
     }
 }
@@ -109,7 +85,7 @@ class ResetPasswordViewController: UIViewController {
 //MARK: - Actions
 extension ResetPasswordViewController {
     @objc func resetPasswordTapped() {
-        if passwordTextField.text != "" {
+        if passwordTextField.textfield.text != "" {
             delegate?.resetPassword()
         } else {
             infoLabel.isHidden = false
