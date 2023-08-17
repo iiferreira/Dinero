@@ -1,5 +1,4 @@
 # Dinero
 
-Hello :)
+Example iOS project.
 
-This is Dinero, a example project
