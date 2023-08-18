@@ -22,7 +22,7 @@ class ResetPasswordViewController: UIViewController {
     // Buttons
     
     let resetPasswordBtn = UIButton(type: .system)
-    
+    let backButton = UIButton(type: .system)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,11 +36,17 @@ class ResetPasswordViewController: UIViewController {
         divider.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         resetPasswordBtn.translatesAutoresizingMaskIntoConstraints = false
+        backButton.translatesAutoresizingMaskIntoConstraints = false
         
         resetPasswordBtn.setTitle("Reset Password", for: .normal)
         resetPasswordBtn.configuration = .filled()
         resetPasswordBtn.configuration?.imagePadding = 8
         resetPasswordBtn.addTarget(self, action: #selector(resetPasswordTapped), for: .primaryActionTriggered)
+        
+        backButton.setTitle("Back", for: .normal)
+        backButton.configuration = .filled()
+        backButton.configuration?.imagePadding = 8
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .primaryActionTriggered)
         
         divider.backgroundColor = .separator
         
@@ -55,6 +61,7 @@ class ResetPasswordViewController: UIViewController {
         view.addSubview(divider)
         view.addSubview(infoLabel)
         view.addSubview(resetPasswordBtn)
+        view.addSubview(backButton)
         
         NSLayoutConstraint.activate([
             passwordTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -79,6 +86,12 @@ class ResetPasswordViewController: UIViewController {
             resetPasswordBtn.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
             resetPasswordBtn.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
         ])
+        
+        NSLayoutConstraint.activate([
+           backButton.topAnchor.constraint(equalTo: resetPasswordBtn.bottomAnchor, constant: 12),
+           backButton.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+           backButton.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+        ])
     }
 }
 
@@ -94,17 +107,21 @@ extension ResetPasswordViewController {
             }
         }
     }
+    
+    @objc func backButtonTapped() {
+        delegate?.resetPassword()
+    }
 }
 
 //MARK: - Animations
 
 extension ResetPasswordViewController {
     private func fadeAnimation() {
-        let animator = UIViewPropertyAnimator(duration: 0.45, curve: .easeInOut) {
+        let animator = UIViewPropertyAnimator(duration: 1.2, curve: .easeInOut) {
             self.infoLabel.alpha = 0
         }
-        animator.startAnimation(afterDelay: 0.25)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        animator.startAnimation(afterDelay: 0.65)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             self.infoLabel.isHidden = true
             self.infoLabel.alpha = 1
         }
