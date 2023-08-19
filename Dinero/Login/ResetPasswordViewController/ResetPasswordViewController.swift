@@ -51,7 +51,9 @@ class ResetPasswordViewController: UIViewController {
         divider.backgroundColor = .separator
         
         infoLabel.text = "Enter your password."
-        infoLabel.textColor = .red
+    
+        infoLabel.textColor = .systemRed
+        infoLabel.numberOfLines = 0
         infoLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         infoLabel.isHidden = true
     }
@@ -76,9 +78,10 @@ class ResetPasswordViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            infoLabel.topAnchor.constraint(equalToSystemSpacingBelow: divider.bottomAnchor, multiplier: 1),
+            infoLabel.topAnchor.constraint(equalToSystemSpacingBelow: divider.bottomAnchor, multiplier: 0.2),
             infoLabel.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
             infoLabel.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+            infoLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
 
         NSLayoutConstraint.activate([
