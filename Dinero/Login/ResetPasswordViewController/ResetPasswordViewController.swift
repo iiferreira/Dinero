@@ -18,6 +18,9 @@ class ResetPasswordViewController: UIViewController {
     let passwordTextField = PasswordTextField(placeholderText: "New Password")
     let divider = UIView()
     let infoLabel = UILabel()
+//    let digitCondition = PasswordCriteriaText(text: "digit (0-9)", condition: .success)
+//    let specialCharCondition = PasswordCriteriaText(text: "special characater", condition: .fail)
+    let passwordCriteriaView = PasswordCriteriaView()
     
     // Buttons
     
@@ -37,6 +40,7 @@ class ResetPasswordViewController: UIViewController {
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         resetPasswordBtn.translatesAutoresizingMaskIntoConstraints = false
         backButton.translatesAutoresizingMaskIntoConstraints = false
+        passwordCriteriaView.translatesAutoresizingMaskIntoConstraints = false
         
         resetPasswordBtn.setTitle("Reset Password", for: .normal)
         resetPasswordBtn.configuration = .filled()
@@ -62,8 +66,10 @@ class ResetPasswordViewController: UIViewController {
         view.addSubview(passwordTextField)
         view.addSubview(divider)
         view.addSubview(infoLabel)
-        view.addSubview(resetPasswordBtn)
-        view.addSubview(backButton)
+        view.addSubview(passwordCriteriaView)
+
+//        view.addSubview(resetPasswordBtn)
+//        view.addSubview(backButton)
         
         NSLayoutConstraint.activate([
             passwordTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -83,18 +89,24 @@ class ResetPasswordViewController: UIViewController {
             infoLabel.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
             infoLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
-
-        NSLayoutConstraint.activate([
-            resetPasswordBtn.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 12),
-            resetPasswordBtn.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
-            resetPasswordBtn.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
-        ])
         
         NSLayoutConstraint.activate([
-           backButton.topAnchor.constraint(equalTo: resetPasswordBtn.bottomAnchor, constant: 12),
-           backButton.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
-           backButton.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+            passwordCriteriaView.topAnchor.constraint(equalToSystemSpacingBelow: infoLabel.bottomAnchor, multiplier: 1),
+            passwordCriteriaView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        
         ])
+
+//        NSLayoutConstraint.activate([
+//            resetPasswordBtn.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 12),
+//            resetPasswordBtn.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+//            resetPasswordBtn.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+//        ])
+//        
+//        NSLayoutConstraint.activate([
+//           backButton.topAnchor.constraint(equalTo: resetPasswordBtn.bottomAnchor, constant: 12),
+//           backButton.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+//           backButton.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+//        ])
     }
 }
 
