@@ -9,13 +9,34 @@ import UIKit
 
 class PasswordCriteriaView : UIView {
     
+    let imageView = UIImageView()
+    
+    let checkmarkImage = UIImage(systemName: "checkmark.circle")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
+    let xmarkImage = UIImage(systemName: "xmark.circle")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
+    let circleImage = UIImage(systemName: "circle")?.withTintColor(.tertiaryLabel, renderingMode: .alwaysOriginal)
+    
+    var isCriteriaMet: Bool = false {
+        didSet {
+            if isCriteriaMet {
+                imageView.image = checkmarkImage
+            } else {
+                imageView.image = xmarkImage
+            }
+        }
+    }
+    
+    func reset() {
+        isCriteriaMet = false
+        imageView.image = circleImage
+    }
+    
     let passwordCriteriaVStack = UIStackView()
     
-    let charCondition = PasswordCriteriaText(text: "8-32 characters", condition: .fail)
-    let upperCaseLetterCondition = PasswordCriteriaText(text: "uppercase letter (A-Z)", condition: .success)
-    let lowerCaserLetterCondition = PasswordCriteriaText(text: "lowercase letter (a-z)", condition: .fail)
-    let digitCondition = PasswordCriteriaText(text: "digit (0-9)", condition: .success)
-    let specialCharCondition = PasswordCriteriaText(text: "special characater (e.g. !@#$%^&)", condition: .fail)
+    var charCondition = PasswordCriteriaText(text: "8-32 characters", condition: .fail)
+    var upperCaseLetterCondition = PasswordCriteriaText(text: "uppercase letter (A-Z)", condition: .success)
+    var lowerCaserLetterCondition = PasswordCriteriaText(text: "lowercase letter (a-z)", condition: .fail)
+    var digitCondition = PasswordCriteriaText(text: "digit (0-9)", condition: .success)
+    var specialCharCondition = PasswordCriteriaText(text: "special characater (e.g. !@#$%^&)", condition: .fail)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,6 +52,19 @@ class PasswordCriteriaView : UIView {
         return CGSize(width: 260, height: 150)
     }
     
+    func randomCriteria() -> CriteriaType {
+        let i = Int.random(in: 0...1)
+        var criteria : CriteriaType?
+        
+        if i == 0 {
+            criteria = CriteriaType.success
+        } else if ( i == 1) {
+            criteria = CriteriaType.fail
+        }
+        
+        return criteria!
+    }
+    
     func setup() {
         backgroundColor = .systemFill
         layer.cornerRadius = 12
@@ -44,6 +78,8 @@ class PasswordCriteriaView : UIView {
         
         passwordCriteriaVStack.axis = .vertical
         passwordCriteriaVStack.spacing = 5
+
+        
     }
     
     func layout() {
@@ -62,3 +98,4 @@ class PasswordCriteriaView : UIView {
         
     }
 }
+

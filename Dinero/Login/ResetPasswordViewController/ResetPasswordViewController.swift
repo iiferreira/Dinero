@@ -60,6 +60,11 @@ class ResetPasswordViewController: UIViewController {
         infoLabel.numberOfLines = 0
         infoLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         infoLabel.isHidden = true
+        
+        passwordCriteriaView.charCondition.criteriaType = randomCriteria()
+        passwordCriteriaView.upperCaseLetterCondition.criteriaType = randomCriteria()
+        passwordCriteriaView.lowerCaserLetterCondition.criteriaType = randomCriteria()
+
     }
     
     func layout() {
@@ -144,3 +149,18 @@ extension ResetPasswordViewController {
 }
 
 
+//MARK: - Random View Will Appear Test
+extension ResetPasswordViewController {
+    func randomCriteria() -> CriteriaType {
+        let i = Int.random(in: 0...1)
+        var criteria : CriteriaType?
+        
+        if i == 0 {
+            criteria = CriteriaType.success
+        } else if ( i == 1) {
+            criteria = CriteriaType.fail
+        }
+        
+        return criteria!
+    }
+}

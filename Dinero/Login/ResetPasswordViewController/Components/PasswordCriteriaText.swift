@@ -8,14 +8,15 @@
 import Foundation
 import UIKit
 
-enum CriteriaType {
-    case success,fail
+enum CriteriaType : Int {
+    case success = 0
+    case fail = 1
 }
 
 class PasswordCriteriaText : UIView {
     
-    let text : String
-    let criteriaType : CriteriaType
+    var text : String
+    var criteriaType : CriteriaType
     
     let criteriaImage = UIImageView()
     let criteriaLabel = UILabel()
@@ -43,7 +44,7 @@ class PasswordCriteriaText : UIView {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 240, height: 22)
+        return CGSize(width: 240, height: 24)
     }
     
     func style() {
@@ -68,8 +69,8 @@ class PasswordCriteriaText : UIView {
         NSLayoutConstraint.activate([
             criteriaImage.heightAnchor.constraint(equalToConstant: 20),
             criteriaImage.widthAnchor.constraint(equalToConstant: 20),
-            criteriaHStack.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 1),
-            criteriaHStack.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 1)
+            criteriaHStack.centerXAnchor.constraint(equalTo: centerXAnchor),
+            criteriaHStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0.5)
         ])
     }
 }
