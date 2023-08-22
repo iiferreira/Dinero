@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import Foundation
 
-class PasswordCriteriaView : UIView {
+class PasswordStatusView : UIView {
     
     let imageView = UIImageView()
     
@@ -32,11 +33,11 @@ class PasswordCriteriaView : UIView {
     
     let passwordCriteriaVStack = UIStackView()
     
-    var charCondition = PasswordCriteriaText(text: "8-32 characters", condition: .fail)
-    var upperCaseLetterCondition = PasswordCriteriaText(text: "uppercase letter (A-Z)", condition: .success)
-    var lowerCaserLetterCondition = PasswordCriteriaText(text: "lowercase letter (a-z)", condition: .fail)
-    var digitCondition = PasswordCriteriaText(text: "digit (0-9)", condition: .success)
-    var specialCharCondition = PasswordCriteriaText(text: "special characater (e.g. !@#$%^&)", condition: .fail)
+    var lenghtCriteriaView = PasswordCriteriaText(text: "8-32 characters", condition: .fail)
+    var uppercaseCriteriaView = PasswordCriteriaText(text: "uppercase letter (A-Z)", condition: .success)
+    var lowercaseCriteriaView = PasswordCriteriaText(text: "lowercase letter (a-z)", condition: .fail)
+    var digitCriteriaView = PasswordCriteriaText(text: "digit (0-9)", condition: .success)
+    var specialCharacterCriteriaView = PasswordCriteriaText(text: "special characater (e.g. !@#$%^&)", condition: .fail)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,7 +50,7 @@ class PasswordCriteriaView : UIView {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 260, height: 150)
+        return CGSize(width: 320, height: 150)
     }
     
     func randomCriteria() -> CriteriaType {
@@ -67,14 +68,15 @@ class PasswordCriteriaView : UIView {
     
     func setup() {
         backgroundColor = .systemFill
-        layer.cornerRadius = 12
+        layer.cornerRadius = 6
+        clipsToBounds = true
         
         passwordCriteriaVStack.translatesAutoresizingMaskIntoConstraints = false
-        charCondition.translatesAutoresizingMaskIntoConstraints = false
-        upperCaseLetterCondition.translatesAutoresizingMaskIntoConstraints = false
-        lowerCaserLetterCondition.translatesAutoresizingMaskIntoConstraints = false
-        digitCondition.translatesAutoresizingMaskIntoConstraints = false
-        specialCharCondition.translatesAutoresizingMaskIntoConstraints = false
+        lenghtCriteriaView.translatesAutoresizingMaskIntoConstraints = false
+        uppercaseCriteriaView.translatesAutoresizingMaskIntoConstraints = false
+        lowercaseCriteriaView.translatesAutoresizingMaskIntoConstraints = false
+        digitCriteriaView.translatesAutoresizingMaskIntoConstraints = false
+        specialCharacterCriteriaView.translatesAutoresizingMaskIntoConstraints = false
         
         passwordCriteriaVStack.axis = .vertical
         passwordCriteriaVStack.spacing = 5
@@ -83,17 +85,17 @@ class PasswordCriteriaView : UIView {
     }
     
     func layout() {
-        passwordCriteriaVStack.addArrangedSubview(charCondition)
-        passwordCriteriaVStack.addArrangedSubview(upperCaseLetterCondition)
-        passwordCriteriaVStack.addArrangedSubview(lowerCaserLetterCondition)
-        passwordCriteriaVStack.addArrangedSubview(digitCondition)
-        passwordCriteriaVStack.addArrangedSubview(specialCharCondition)
+        passwordCriteriaVStack.addArrangedSubview(lenghtCriteriaView)
+        passwordCriteriaVStack.addArrangedSubview(uppercaseCriteriaView)
+        passwordCriteriaVStack.addArrangedSubview(lowercaseCriteriaView)
+        passwordCriteriaVStack.addArrangedSubview(digitCriteriaView)
+        passwordCriteriaVStack.addArrangedSubview(specialCharacterCriteriaView)
         
         addSubview(passwordCriteriaVStack)
         
         NSLayoutConstraint.activate([
-            passwordCriteriaVStack.topAnchor.constraint(equalTo: topAnchor, constant: 1),
-            passwordCriteriaVStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 1)
+            passwordCriteriaVStack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            passwordCriteriaVStack.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
         
     }

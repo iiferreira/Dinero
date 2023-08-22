@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .systemBackground
 
         loginViewController.delegate = self
-        resetPasswordViewController.delegate = self
+       // resetPasswordViewController.delegate = self
         onboardingContainerViewController.delegate = self
         
         registerForNotifications()

@@ -39,7 +39,7 @@
 		1FE062AB2A729D6F00D404D9 /* NSNotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE062AA2A729D6F00D404D9 /* NSNotificationName.swift */; };
 		1FE062AD2A72A31700D404D9 /* UITextField+SecureToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE062AC2A72A31700D404D9 /* UITextField+SecureToggle.swift */; };
 		1FF98ABF2A93852100D866EE /* PasswordCriteriaText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF98ABE2A93852100D866EE /* PasswordCriteriaText.swift */; };
-		1FF98AC12A93913E00D866EE /* PasswordCriteriaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF98AC02A93913E00D866EE /* PasswordCriteriaView.swift */; };
+		1FF98AC12A93913E00D866EE /* PasswordStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF98AC02A93913E00D866EE /* PasswordStatusView.swift */; };
 		1FFF14722A4658C300822024 /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFF14712A4658C300822024 /* OnboardingContainerViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -89,7 +89,7 @@
 		1FE062AA2A729D6F00D404D9 /* NSNotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotificationName.swift; sourceTree = "<group>"; };
 		1FE062AC2A72A31700D404D9 /* UITextField+SecureToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+SecureToggle.swift"; sourceTree = "<group>"; };
 		1FF98ABE2A93852100D866EE /* PasswordCriteriaText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCriteriaText.swift; sourceTree = "<group>"; };
-		1FF98AC02A93913E00D866EE /* PasswordCriteriaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCriteriaView.swift; sourceTree = "<group>"; };
+		1FF98AC02A93913E00D866EE /* PasswordStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStatusView.swift; sourceTree = "<group>"; };
 		1FFF14712A4658C300822024 /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,7 +157,7 @@
 			children = (
 				1F2632E02A8D54F500F9C9B0 /* PasswordTextField.swift */,
 				1FF98ABE2A93852100D866EE /* PasswordCriteriaText.swift */,
-				1FF98AC02A93913E00D866EE /* PasswordCriteriaView.swift */,
+				1FF98AC02A93913E00D866EE /* PasswordStatusView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -434,7 +434,7 @@
 				1F7E1D902A66BAE90090DD68 /* AccountSummaryViewController.swift in Sources */,
 				1FFF14722A4658C300822024 /* OnboardingContainerViewController.swift in Sources */,
 				1F151F7C2A86B18300E39E91 /* MockProfileManager.swift in Sources */,
-				1FF98AC12A93913E00D866EE /* PasswordCriteriaView.swift in Sources */,
+				1FF98AC12A93913E00D866EE /* PasswordStatusView.swift in Sources */,
 				1F1155D42A66E2D8001C182C /* AccountSummaryTableViewCell.swift in Sources */,
 				1F13CC142A4F42490042CE73 /* HomeViewController.swift in Sources */,
 				1F5D66082A840A2A00B36CE1 /* SkeletonLoadable.swift in Sources */,
