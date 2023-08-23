@@ -23,7 +23,6 @@ class ResetPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print("View did load")
         
         setup()
         layout()
@@ -51,10 +50,6 @@ class ResetPasswordViewController: UIViewController {
             criteriaVStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             criteriaVStack.widthAnchor.constraint(equalToConstant: 260)
         ])
-        
-        //passwordStatusView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
-       
     }
 
 }
@@ -80,31 +75,16 @@ extension ResetPasswordViewController {
 //MARK: - Animations
 
 extension ResetPasswordViewController {
-//    private func fadeAnimation() {
-//        let animator = UIViewPropertyAnimator(duration: 1.2, curve: .easeInOut) {
-//            self.textfield.infoLabel.alpha = 0
-//        }
-//        animator.startAnimation(afterDelay: 0.65)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-//            self.infoLabel.isHidden = true
-//            self.infoLabel.alpha = 1
-//        }
-//    }
-}
-
-
-//MARK: - Random View Will Appear Test
-extension ResetPasswordViewController {
-    func randomCriteria() -> CriteriaType {
-        let i = Int.random(in: 0...1)
-        var criteria : CriteriaType?
-        
-        if i == 0 {
-            criteria = CriteriaType.success
-        } else if ( i == 1) {
-            criteria = CriteriaType.fail
+    private func fadeAnimation() {
+        let animator = UIViewPropertyAnimator(duration: 1.2, curve: .easeInOut) {
+            self.passwordTextField.errorLabel.alpha = 0
         }
-        
-        return criteria!
+        animator.startAnimation(afterDelay: 0.65)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.passwordTextField.errorLabel.isHidden = true
+            self.passwordTextField.errorLabel.alpha = 1
+        }
     }
 }
+
+

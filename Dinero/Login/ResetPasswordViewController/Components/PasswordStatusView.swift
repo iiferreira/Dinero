@@ -56,13 +56,13 @@ class PasswordStatusView : UIView {
     func randomCriteria() -> CriteriaType {
         let i = Int.random(in: 0...1)
         var criteria : CriteriaType?
-        
+
         if i == 0 {
             criteria = CriteriaType.success
         } else if ( i == 1) {
             criteria = CriteriaType.fail
         }
-        
+
         return criteria!
     }
     
