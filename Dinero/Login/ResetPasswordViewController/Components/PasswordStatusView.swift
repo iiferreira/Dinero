@@ -8,40 +8,26 @@
 import UIKit
 import Foundation
 
-class PasswordStatusView : UIView {
+import Foundation
+import UIKit
+
+class PasswordStatusView: UIView {
+    let stackView = UIStackView()
     
-    let imageView = UIImageView()
+    let criteriaLabel = UILabel()
     
-    let checkmarkImage = UIImage(systemName: "checkmark.circle")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
-    let xmarkImage = UIImage(systemName: "xmark.circle")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
-    let circleImage = UIImage(systemName: "circle")?.withTintColor(.tertiaryLabel, renderingMode: .alwaysOriginal)
+    let lengthCriteriaView = PasswordCriteriaView(text: "8-32 characters (no spaces)")
+    let uppercaseCriteriaView = PasswordCriteriaView(text: "uppercase letter (A-Z)")
+    let lowerCaseCriteriaView = PasswordCriteriaView(text: "lowercase (a-z)")
+    let digitCriteriaView = PasswordCriteriaView(text: "digit (0-9)")
+    let specialCharacterCriteriaView = PasswordCriteriaView(text: "special character (e.g. !@#$%^)")
     
-    var isCriteriaMet: Bool = false {
-        didSet {
-            if isCriteriaMet {
-                imageView.image = checkmarkImage
-            } else {
-                imageView.image = xmarkImage
-            }
-        }
-    }
-    
-    func reset() {
-        isCriteriaMet = false
-        imageView.image = circleImage
-    }
-    
-    let passwordCriteriaVStack = UIStackView()
-    
-    var lenghtCriteriaView = PasswordCriteriaText(text: "8-32 characters", condition: .fail)
-    var uppercaseCriteriaView = PasswordCriteriaText(text: "uppercase letter (A-Z)", condition: .success)
-    var lowercaseCriteriaView = PasswordCriteriaText(text: "lowercase letter (a-z)", condition: .fail)
-    var digitCriteriaView = PasswordCriteriaText(text: "digit (0-9)", condition: .success)
-    var specialCharacterCriteriaView = PasswordCriteriaText(text: "special characater (e.g. !@#$%^&)", condition: .fail)
+    private var shouldResetCriteria : Bool = true
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        
+        style()
         layout()
     }
     
@@ -50,54 +36,91 @@ class PasswordStatusView : UIView {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 320, height: 150)
-    }
-    
-    func randomCriteria() -> CriteriaType {
-        let i = Int.random(in: 0...1)
-        var criteria : CriteriaType?
-
-        if i == 0 {
-            criteria = CriteriaType.success
-        } else if ( i == 1) {
-            criteria = CriteriaType.fail
-        }
-
-        return criteria!
-    }
-    
-    func setup() {
-        backgroundColor = .systemFill
-        layer.cornerRadius = 6
-        clipsToBounds = true
-        
-        passwordCriteriaVStack.translatesAutoresizingMaskIntoConstraints = false
-        lenghtCriteriaView.translatesAutoresizingMaskIntoConstraints = false
-        uppercaseCriteriaView.translatesAutoresizingMaskIntoConstraints = false
-        lowercaseCriteriaView.translatesAutoresizingMaskIntoConstraints = false
-        digitCriteriaView.translatesAutoresizingMaskIntoConstraints = false
-        specialCharacterCriteriaView.translatesAutoresizingMaskIntoConstraints = false
-        
-        passwordCriteriaVStack.axis = .vertical
-        passwordCriteriaVStack.spacing = 5
-
-        
-    }
-    
-    func layout() {
-        passwordCriteriaVStack.addArrangedSubview(lenghtCriteriaView)
-        passwordCriteriaVStack.addArrangedSubview(uppercaseCriteriaView)
-        passwordCriteriaVStack.addArrangedSubview(lowercaseCriteriaView)
-        passwordCriteriaVStack.addArrangedSubview(digitCriteriaView)
-        passwordCriteriaVStack.addArrangedSubview(specialCharacterCriteriaView)
-        
-        addSubview(passwordCriteriaVStack)
-        
-        NSLayoutConstraint.activate([
-            passwordCriteriaVStack.centerYAnchor.constraint(equalTo: centerYAnchor),
-            passwordCriteriaVStack.centerXAnchor.constraint(equalTo: centerXAnchor)
-        ])
-        
+        return CGSize(width: 200, height: 200)
     }
 }
 
+extension PasswordStatusView {
+    
+    func style() {
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .tertiarySystemFill
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.distribution = .equalCentering
+        
+        criteriaLabel.numberOfLines = 0
+        criteriaLabel.lineBreakMode = .byWordWrapping
+        criteriaLabel.attributedText = makeCriteriaMessage()
+        
+        lengthCriteriaView.translatesAutoresizingMaskIntoConstraints = false
+        uppercaseCriteriaView.translatesAutoresizingMaskIntoConstraints = false
+        lowerCaseCriteriaView.translatesAutoresizingMaskIntoConstraints = false
+        digitCriteriaView.translatesAutoresizingMaskIntoConstraints = false
+        specialCharacterCriteriaView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func layout() {
+        stackView.addArrangedSubview(lengthCriteriaView)
+        stackView.addArrangedSubview(criteriaLabel)
+        stackView.addArrangedSubview(uppercaseCriteriaView)
+        stackView.addArrangedSubview(lowerCaseCriteriaView)
+        stackView.addArrangedSubview(digitCriteriaView)
+        stackView.addArrangedSubview(specialCharacterCriteriaView)
+        
+        addSubview(stackView)
+
+        // Stack layout
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 2),
+            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 2),
+            trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
+            bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 2)
+        ])
+    }
+    
+    private func makeCriteriaMessage() -> NSAttributedString {
+        var plainTextAttributes = [NSAttributedString.Key: AnyObject]()
+        plainTextAttributes[.font] = UIFont.preferredFont(forTextStyle: .subheadline)
+        plainTextAttributes[.foregroundColor] = UIColor.secondaryLabel
+        
+        var boldTextAttributes = [NSAttributedString.Key: AnyObject]()
+        boldTextAttributes[.foregroundColor] = UIColor.label
+        boldTextAttributes[.font] = UIFont.preferredFont(forTextStyle: .subheadline)
+
+        let attrText = NSMutableAttributedString(string: "Use at least ", attributes: plainTextAttributes)
+        attrText.append(NSAttributedString(string: "3 of these 4 ", attributes: boldTextAttributes))
+        attrText.append(NSAttributedString(string: "criteria when setting your password:", attributes: plainTextAttributes))
+
+        return attrText
+    }
+}
+
+//MARK: -Actions
+
+extension PasswordStatusView {
+    func updateDisplay(_ text: String) {
+        let lenghtAndNoSpaceMet = PasswordCriteria.lenghtAndNoSpaceMet(text)
+        let uppercaseMet = PasswordCriteria.uppercaseMet(text)
+        let lowercaseMet = PasswordCriteria.lowercaseMet(text)
+        let digitMet = PasswordCriteria.digitMet(text)
+        let specialCharMet = PasswordCriteria.specialCharacterMet(text)
+        
+        if shouldResetCriteria {
+            lenghtAndNoSpaceMet ? lengthCriteriaView.isCriteriaMet = true : lengthCriteriaView.reset()
+            
+            uppercaseMet ? uppercaseCriteriaView.isCriteriaMet = true : uppercaseCriteriaView.reset()
+            
+            lowercaseMet ? lowerCaseCriteriaView.isCriteriaMet = true :
+            lowerCaseCriteriaView.reset()
+            
+            digitMet ? digitCriteriaView.isCriteriaMet = true :
+            digitCriteriaView.reset()
+            
+            specialCharMet ? specialCharacterCriteriaView.isCriteriaMet = true :
+            specialCharacterCriteriaView.reset()
+        }
+    }
+}

@@ -94,12 +94,6 @@ extension AppDelegate : LoginViewControllerDelegate {
     }
 }
 
-extension AppDelegate : ResetPasswordDelegate {
-    func resetPassword() {
-        setRootViewController(loginViewController)
-    }
-}
-
 extension AppDelegate : OnboardingContainerViewControllerDelegate {
     func didFinishedOnboarding() {
         LocalState.hasOnboarded = true

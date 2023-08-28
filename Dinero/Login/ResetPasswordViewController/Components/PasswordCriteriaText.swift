@@ -8,35 +8,41 @@
 import Foundation
 import UIKit
 
-enum CriteriaType : Int {
-    case success = 0
-    case fail = 1
-}
+import Foundation
+import UIKit
 
-class PasswordCriteriaText : UIView {
+class PasswordCriteriaView: UIView {
     
-    var text : String
-    var criteriaType : CriteriaType
+    let stackView = UIStackView()
+    let imageView = UIImageView()
+    let label = UILabel()
     
-    let criteriaImage = UIImageView()
-    let criteriaLabel = UILabel()
-    let criteriaHStack = UIStackView()
+    let checkmarkImage = UIImage(systemName: "checkmark.circle")!.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
+    let xmarkImage = UIImage(systemName: "xmark.circle")!.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+    let circleImage = UIImage(systemName: "circle")!.withTintColor(.tertiaryLabel, renderingMode: .alwaysOriginal)
+     
+    var isCriteriaMet: Bool = false {
+        didSet {
+            if isCriteriaMet {
+                imageView.image = checkmarkImage
+            } else {
+                imageView.image = xmarkImage
+            }
+        }
+    }
     
-    init(text:String, condition:CriteriaType) {
-        self.text = text
-        self.criteriaType = condition
+    func reset() {
+        isCriteriaMet = false
+        imageView.image = circleImage
+    }
+    
+    init(text: String) {
         super.init(frame: .zero)
+        
+        label.text = text
+        
         style()
         layout()
-        
-        switch condition {
-        case .success:
-            let image = UIImage(systemName: "checkmark.circle")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
-            criteriaImage.image = image
-        case .fail:
-            let image = UIImage(systemName: "x.circle")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
-            criteriaImage.image = image
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -44,33 +50,47 @@ class PasswordCriteriaText : UIView {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 240, height: 24)
+        return CGSize(width: 200, height: 40)
     }
+}
+
+extension PasswordCriteriaView {
     
     func style() {
+        translatesAutoresizingMaskIntoConstraints = false
         
-        criteriaImage.translatesAutoresizingMaskIntoConstraints = false
-        criteriaLabel.translatesAutoresizingMaskIntoConstraints = false
-        criteriaHStack.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 8
         
-        criteriaHStack.axis = .horizontal
-        criteriaHStack.spacing = 7
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "circle")!.withTintColor(.tertiaryLabel, renderingMode: .alwaysOriginal)
         
-        criteriaLabel.text = text
-        criteriaLabel.textColor = .systemGray
-        criteriaLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.textColor = .secondaryLabel
     }
     
     func layout() {
-        criteriaHStack.addArrangedSubview(criteriaImage)
-        criteriaHStack.addArrangedSubview(criteriaLabel)
-        addSubview(criteriaHStack)
+        stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(label)
         
+        addSubview(stackView)
+        
+        // Stack
         NSLayoutConstraint.activate([
-            criteriaImage.heightAnchor.constraint(equalToConstant: 20),
-            criteriaImage.widthAnchor.constraint(equalToConstant: 20),
-            criteriaHStack.centerXAnchor.constraint(equalTo: centerXAnchor),
-            criteriaHStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0.5)
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        
+        // Image
+        NSLayoutConstraint.activate([
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
+        ])
+        
+        // CHCR
+        imageView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        label.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
     }
 }

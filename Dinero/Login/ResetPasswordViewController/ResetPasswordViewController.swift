@@ -7,82 +7,73 @@
 
 import UIKit
 
-protocol ResetPasswordDelegate : AnyObject {
-    func resetPassword()
-}
-
 class ResetPasswordViewController: UIViewController {
     
-    weak var delegate : ResetPasswordDelegate?
+    //let criteria = PasswordCriteria()
     
-    let criteriaVStack = UIStackView()
-    let passwordTextField = PasswordTextField(placeholder: "Enter password.")
-    let passwordStatusView = PasswordStatusView()
-    let confirmPasswordTextField = PasswordTextField(placeholder: "Re-enter new password.")
-
+    let stackView = UIStackView()
+    let newPasswordTextField = PasswordTextField(placeHolderText: "New password")
+    let statusView = PasswordStatusView()
+    let confirmPasswordTextField = PasswordTextField(placeHolderText: "Re-enter new password")
+    let resetButton = UIButton(type: .system)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        setup()
+        style()
         layout()
         
     }
-    
-    func setup() {
-        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
-        confirmPasswordTextField.translatesAutoresizingMaskIntoConstraints = false
-        passwordStatusView.translatesAutoresizingMaskIntoConstraints = false
-        criteriaVStack.translatesAutoresizingMaskIntoConstraints = false
+}
+
+extension ResetPasswordViewController {
+    func style() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 20
         
-        criteriaVStack.axis = .vertical
-        criteriaVStack.spacing = 20
+        newPasswordTextField.translatesAutoresizingMaskIntoConstraints = false
+        newPasswordTextField.delegate = self
+        
+        statusView.translatesAutoresizingMaskIntoConstraints = false
+        statusView.layer.cornerRadius = 5
+        statusView.clipsToBounds = true
+        
+        confirmPasswordTextField.translatesAutoresizingMaskIntoConstraints = false
+        confirmPasswordTextField.delegate = self
+        
+        resetButton.translatesAutoresizingMaskIntoConstraints = false
+        resetButton.configuration = .filled()
+        resetButton.setTitle("Reset password", for: [])
+        // resetButton.addTarget(self, action: #selector(resetPasswordButtonTapped), for: .primaryActionTriggered)
+
     }
     
     func layout() {
-        view.addSubview(criteriaVStack)
-        criteriaVStack.addArrangedSubview(passwordTextField)
-        criteriaVStack.addArrangedSubview(passwordStatusView)
-        criteriaVStack.addArrangedSubview(confirmPasswordTextField)
+        stackView.addArrangedSubview(newPasswordTextField)
+        stackView.addArrangedSubview(statusView)
+        stackView.addArrangedSubview(confirmPasswordTextField)
+        stackView.addArrangedSubview(resetButton)
+        
+        view.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            criteriaVStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            criteriaVStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            criteriaVStack.widthAnchor.constraint(equalToConstant: 260)
+            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
+
     }
-
 }
 
-//MARK: - Actions
-extension ResetPasswordViewController {
-//    @objc func resetPasswordTapped() {
-//        if passwordTextField.textField.text != "" {
-//            delegate?.resetPassword()
-//        } else {
-//            infoLabel.isHidden = false
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-//                self.fadeAnimation()
-//            }
-//        }
-//    }
-//
-//    @objc func backButtonTapped() {
-//        delegate?.resetPassword()
-//    }
-}
-
-//MARK: - Animations
-
-extension ResetPasswordViewController {
-    private func fadeAnimation() {
-        let animator = UIViewPropertyAnimator(duration: 1.2, curve: .easeInOut) {
-            self.passwordTextField.errorLabel.alpha = 0
-        }
-        animator.startAnimation(afterDelay: 0.65)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.passwordTextField.errorLabel.isHidden = true
-            self.passwordTextField.errorLabel.alpha = 1
+extension ResetPasswordViewController: PasswordTextFieldDelegate {
+    func editingChanged(_ sender: PasswordTextField) {
+        if sender === newPasswordTextField {
+            print("Em cima")
+            if let text = sender.textField.text {
+                statusView.updateDisplay(text)
+            }
+        } else if sender === confirmPasswordTextField {
+            print("Em baixo")
         }
     }
 }
