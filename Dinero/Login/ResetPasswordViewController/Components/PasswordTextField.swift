@@ -14,7 +14,7 @@ protocol PasswordTextFieldDelegate : AnyObject {
 
 class PasswordTextField: UIView {
     
-    weak var delegate : PasswordTextFieldDelegate?
+    typealias CustomValidation = (_ textValue:String?) -> (Bool,String)?
     
     let lockImageView = UIImageView(image: UIImage(systemName: "lock.fill"))
     let textField = UITextField()
@@ -22,6 +22,14 @@ class PasswordTextField: UIView {
     let eyeButton = UIButton(type: .custom)
     let dividerView = UIView()
     let errorLabel = UILabel()
+    
+    var customValidation: CustomValidation?
+    weak var delegate : PasswordTextFieldDelegate?
+    
+    var text : String? {
+        get { return textField.text }
+        set { textField.text = newValue }
+    }
     
     init(placeHolderText: String) {
         self.placeHolderText = placeHolderText
@@ -144,8 +152,45 @@ extension PasswordTextField {
 //MARK: - Textfield delegates
 extension PasswordTextField : UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let word = textField.text ?? ""
-        let char = string
+//        let word = textField.text ?? ""
+//        let char = string
         return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print("Saiu do textfield")
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("Apertou return")
+        textField.resignFirstResponder()
+        textField.endEditing(true)
+        return true
+    }
+}
+
+
+//MARK: - Validation
+extension PasswordTextField {
+    
+    func validate() -> Bool {
+        if let customValidation,
+           let customValidationResult = customValidation(text),
+           customValidationResult.0 == false {
+            showError(customValidationResult.1)
+            return false
+        }
+        clearError()
+        return true
+    }
+    
+    private func showError(_ errorMessage:String) {
+        errorLabel.isHidden = false
+        errorLabel.text = errorMessage
+    }
+    
+    private func clearError() {
+        errorLabel.isHidden = true
+        errorLabel.text = ""
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 class ResetPasswordViewController: UIViewController {
     
     //let criteria = PasswordCriteria()
+    typealias CustomValidation = PasswordTextField.CustomValidation
     
     let stackView = UIStackView()
     let newPasswordTextField = PasswordTextField(placeHolderText: "New password")
@@ -19,13 +20,36 @@ class ResetPasswordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
         style()
         layout()
-        
     }
 }
 
 extension ResetPasswordViewController {
+    
+    func setup() {
+        
+        setupDismissPasswordGesture()
+    }
+    
+    private func setupNewPassword() {
+        let newPasswordValidation : CustomValidation = { text in
+            
+            guard let text = text, !text.isEmpty else {
+                self.statusView.reset()
+                return(false, "Enter your password!")
+            }
+            return(true,"")
+        }
+        newPasswordTextField.customValidation = newPasswordValidation
+    }
+    
+    private func setupDismissPasswordGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOutGesture(_:)))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
     func style() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -44,8 +68,9 @@ extension ResetPasswordViewController {
         resetButton.translatesAutoresizingMaskIntoConstraints = false
         resetButton.configuration = .filled()
         resetButton.setTitle("Reset password", for: [])
+        resetButton.addTarget(self, action: #selector(resetPassword(_:)), for: .touchUpInside)
         // resetButton.addTarget(self, action: #selector(resetPasswordButtonTapped), for: .primaryActionTriggered)
-
+        
     }
     
     func layout() {
@@ -61,20 +86,42 @@ extension ResetPasswordViewController {
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
-
+        
     }
 }
 
+//MARK: - Actions
+extension ResetPasswordViewController {
+    
+    @objc func resetPassword(_ sender: UIButton) {
+        if newPasswordTextField.text == confirmPasswordTextField.text && newPasswordTextField.text != "" {
+            print("Password Match")
+        } else {
+            print("Something wrong")
+        }
+    }
+    
+}
+
+
+
+//MARK: - Delegate Methods
 extension ResetPasswordViewController: PasswordTextFieldDelegate {
     func editingChanged(_ sender: PasswordTextField) {
         if sender === newPasswordTextField {
-            print("Em cima")
-            if let text = sender.textField.text {
-                statusView.updateDisplay(text)
-            }
-        } else if sender === confirmPasswordTextField {
-            print("Em baixo")
+            statusView.updateDisplay(sender.textField.text ?? "")
         }
+    }
+    
+    func editingDidEnd(_ sender: PasswordTextField) {
+        if sender === newPasswordTextField {
+            _ = newPasswordTextField.validate()
+        }
+    }
+    
+    @objc func tapOutGesture(_ recognizer: UITapGestureRecognizer) {
+        print("Fora")
+        newPasswordTextField.textField.resignFirstResponder()
     }
 }
 
